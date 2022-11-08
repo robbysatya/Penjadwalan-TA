@@ -11,6 +11,11 @@
                 </div>
                 <form class="user" method="post" action="<?= base_url('auth/register'); ?>">
                   <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="nim" name="nim" placeholder="NIM"
+                      value="<?= set_value('nim'); ?>">
+                    <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+                  <div class="form-group">
                     <input type="text" class="form-control form-control-user" id="name" name="name"
                       placeholder="Full name" value="<?= set_value('name'); ?>">
                     <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -20,6 +25,7 @@
                       placeholder="Email Address" value="<?= set_value('email'); ?>">
                     <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                   </div>
+
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                       <input type="password" class="form-control form-control-user" id="password1" name="password1"
@@ -31,6 +37,7 @@
                         placeholder="Repeat Password">
                     </div>
                   </div>
+
                   <button type="submit" class="btn btn-primary btn-user btn-block">
                     Register Account
                   </button>

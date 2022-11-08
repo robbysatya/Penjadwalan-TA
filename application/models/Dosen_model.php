@@ -59,7 +59,7 @@ class Dosen_model extends CI_Model
     $this->nip = $post['nip'];
     $this->name = $post['name'];
     $this->email = $post['email'];
-    $this->kelompok_keahlian = $post['kelompok_keahlian'];
+    $this->keahlian_id = $post['keahlian_id'];
     $this->kuota_uji = $post['kuota'];
 
     return $this->db->update('tb_dosen', $this, array('id' => $post['id']));

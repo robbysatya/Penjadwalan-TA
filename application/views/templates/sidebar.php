@@ -92,11 +92,11 @@
      </div>
    </li>
 
-   <!-- Nav Item - Charts -->
+   <!-- Nav Item - User -->
    <li class="nav-item">
-     <a class="nav-link" href="charts.html">
-       <i class="fas fa-fw fa-chart-area"></i>
-       <span>Charts</span></a>
+     <a class="nav-link" href="<?= base_url('menu/data_user') ?>">
+       <i class="fas fa-fw fa-users"></i>
+       <span>Data User</span></a>
    </li>
 
    <!-- Nav Item - Tables -->

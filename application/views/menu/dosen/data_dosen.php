@@ -46,7 +46,7 @@
                   <td><?= $dd['keahlian']; ?></td>
                   <td><?= $dd['kuota_uji']; ?></td>
                   <td class="d-grid gap-2">
-                    <button type="button" class="btn btn-success input-block-level form-control" data-toggle="modal"
+                    <button type="button" class="btn btn-warning input-block-level form-control" data-toggle="modal"
                       data-target="#editDataDosenModal<?= $dd['id']; ?>"><i class="fas fa-fw fa-edit"></i></button>
                     <br> <br>
                     <button type="button" class="btn btn-danger input-block-level form-control" data-toggle="modal"
@@ -110,8 +110,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                  class="fas fa-fw fa-times"></i>Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-fw fa-times"></i>
+                Close</button>
               <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Save</button>
             </div>
           </form>
@@ -120,7 +120,6 @@
     </div>
 
     <!-- Modal Edit Data Dosen -->
-    <?php $no = 1; ?>
     <?php
     foreach ($data_dosen as $dd) : ?>
     <div class="modal fade" id="editDataDosenModal<?= $dd['id']; ?>" tabindex="-1" aria-labelledby="editDataDosenLabel"
@@ -177,15 +176,14 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                  class="fas fa-fw fa-times"></i>Close</button>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i> Save Edit</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-fw fa-times"></i>
+                Close</button>
+              <button type="submit" class="btn btn-warning"><i class="fas fa-fw fa-edit"></i> Save Edit</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <?php $no++;  ?>
     <?php endforeach; ?>
 
     <!-- Modal Delete Data Dosen -->

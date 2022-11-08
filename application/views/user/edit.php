@@ -16,6 +16,14 @@
           </div>
 
           <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">NIM</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" id="nim" name="nim" value="<?= $user['nim']; ?>">
+              <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
+            </div>
+          </div>
+
+          <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Full Name</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="name" name="name" value="<?= $user['name']; ?>">
@@ -32,7 +40,7 @@
                 </div>
                 <div class="col-sm-9">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <input type="file" class="custom-file-input" id="image" name="image" value="<?= $user['image']; ?>">
                     <label class="custom-file-label" for="image">Choose file</label>
                   </div>
                 </div>

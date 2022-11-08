@@ -29,7 +29,7 @@ class Data_Dosen extends CI_Controller
     $this->load->view('templates/header', $data);
     $this->load->view('templates/sidebar', $data);
     $this->load->view('templates/topbar', $data);
-    $this->load->view('menu/data_dosen', $data);
+    $this->load->view('menu/dosen/data_dosen', $data);
     $this->load->view('templates/footer');
   }
 
@@ -44,15 +44,8 @@ class Data_Dosen extends CI_Controller
     $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
 
     if ($validation->run() == false) {
-      $data['title'] = 'Data Dosen';
-      $data['user'] = $this->db->get_where('user', ['email' =>
-      $this->session->userdata('email')])->row_array();
-
-      $this->load->view('templates/header', $data);
-      $this->load->view('templates/sidebar', $data);
-      $this->load->view('templates/topbar', $data);
-      $this->load->view('menu/data_dosen', $data);
-      $this->load->view('templates/footer');
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Validation Failed!</div>');
+      redirect('menu/data_dosen');
     } else {
       $this->dosen_model->save();
 
@@ -61,12 +54,10 @@ class Data_Dosen extends CI_Controller
     }
   }
 
-  public function edit($id = null)
+  public function edit()
   {
     $dosen =  $this->dosen_model;
     $validation = $this->form_validation->set_rules($dosen->rules());
-
-    $data['tb_dosen'] = $dosen->getById($id);
 
     if ($validation->run() == false) {
       if (!isset($id)) {

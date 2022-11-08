@@ -43,10 +43,7 @@ class Auth extends CI_Controller
   public function register()
   {
 
-    if ($this->session->userdata('email')) {
-      redirect('user');
-    }
-
+    $this->form_validation->set_rules('nim', 'NIM', 'required|trim');
     $this->form_validation->set_rules('name', 'Name', 'required|trim');
     $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'This email has already registered!']);
     $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', ['matches' => 'Password dont match', 'min_length' => 'Password too short!']);
@@ -60,6 +57,7 @@ class Auth extends CI_Controller
     } else {
       $email = $this->input->post('email', true);
       $data = [
+        'nim' => htmlspecialchars($this->input->post('nim', true)),
         'name' => htmlspecialchars($this->input->post('name', true)),
         'email' => htmlspecialchars($email),
         'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
@@ -136,7 +134,7 @@ class Auth extends CI_Controller
 
       if ($user_token) {
         if (time() - $user_token['date_created'] < (60 * 60 * 24)) {
-          $this->db->set('is_active', 1);
+          $this->db->set('is_active', 2);
           $this->db->where('email', $email);
           $this->db->update('user');
 
