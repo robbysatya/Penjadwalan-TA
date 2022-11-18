@@ -102,14 +102,16 @@ class Data_User extends CI_Controller
   // Fungsi pada controller untuk edit data user
   public function editUser($id = null)
   {
+    $data['title'] = 'Edit Data User';
+    $data['user'] = $this->db->get_where('user', ['email' =>
+    $this->session->userdata('email')])->row_array();
+    $data['user_recent'] = $this->data_user_model->getById($id);
+
     $data_user =  $this->data_user_model;
-    $this->form_validation->set_rules('name', 'Full Name', 'trim|required');
+    $this->form_validation->set_rules('name', 'Name', 'required|trim');
+    $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'This email has already registered!']);
 
     if ($this->form_validation->run() == false) {
-      $data['title'] = 'Edit Data User';
-      $data['user'] = $this->db->get_where('user', ['email' =>
-      $this->session->userdata('email')])->row_array();
-
       $data['user_recent'] = $this->data_user_model->getById($id);
 
       $this->load->view('templates/header', $data);
@@ -118,7 +120,7 @@ class Data_User extends CI_Controller
       $this->load->view('menu/data/edit_data_user', $data);
       $this->load->view('templates/footer');
     } else {
-      $data_user->update();
+      $data_user->update($id);
 
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Account Success!</div>');
       redirect('menu/data_user');

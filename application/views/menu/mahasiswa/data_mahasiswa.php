@@ -1,8 +1,14 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
-      <!-- Page Heading -->
-      <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+      <div class="mb-4">
+        <!-- Page Heading -->
+        <h1 class="h3 text-gray-800"><?= $title; ?></h1>
+        <p class="m-0 font-weight-regular" style="color: red;">* Data dalam tabel ini merupakan mahasiswa yang telah
+          mendaftar:
+        <p class="m-0 font-weight-bold" style="color: red;">Seminar Proposal, Seminar Hasil dan Sidang Akhir</p>
+        </p>
+      </div>
 
       <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
       <?= $this->session->flashdata('message');  ?>
@@ -40,7 +46,7 @@
               <tbody>
                 <?php $no = 1; ?>
                 <?php foreach ($data_mahasiswa as $dm) : ?>
-                <tr style="font-size: 14px;">
+                <tr style="font-size: 12px;">
                   <td scope="row"><?= $no; ?></td>
                   <td><?= $dm['nim']; ?></td>
                   <td><?= $dm['name']; ?></td>
@@ -51,8 +57,9 @@
                   <?php foreach ($data_ujian as $du) : ?>
                   <td><?= $du['jenis_ujian']; ?></td>
                   <?php endforeach; ?>
-                  <td><?= $dm['dosbim_1']; ?></td>
-                  <td><?= $dm['dosbim_2']; ?></td>
+                  <?php foreach ($data_dosen as $dd) : ?>
+                  <td><?= $dd['name']; ?></td>
+                  <?php endforeach; ?>
                   <td><?= $dm['file_draft']; ?></td>
                   <td><?= $dm['file_ppt']; ?></td>
                   <td><?= $dm['file_persetujuan']; ?></td>
@@ -136,12 +143,12 @@
                     <?php endforeach; ?>
                   </select>
                 </div>
-                <!-- <div class="mb-3">
+                <div class="mb-3">
                   <label for="">Dosen Pembimbing 1</label>
                   <select class="custom-select" id="dosbim_1" name="dosbim_1">
                     <option selected>Pilih Dosen Pembimbing 1...</option>
-                    <?php foreach ($data_keahlian as $dk) : ?>
-                    <option value="<?= $dk['id']; ?>"><?= $dk['keahlian']; ?></option>
+                    <?php foreach ($list_data_dosen as $ldd) : ?>
+                    <option value="<?= $ldd['id']; ?>"><?= $ldd['name']; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
@@ -149,12 +156,12 @@
                   <label for="">Dosen Pembimbing 2</label>
                   <select class="custom-select" id="dosbim_2" name="dosbim_2">
                     <option selected>Pilih Dosen Pembimbing 2...</option>
-                    <?php foreach ($data_keahlian as $dk) : ?>
-                    <option value="<?= $dk['id']; ?>"><?= $dk['keahlian']; ?></option>
+                    <?php foreach ($list_data_dosen as $ldd) : ?>
+                    <option value="<?= $ldd['id']; ?>"><?= $ldd['name']; ?></option>
                     <?php endforeach; ?>
                   </select>
-                </div> -->
-                <!-- <div class="mb-3">
+                </div>
+                <div class="mb-3">
                   <label for="">File Draft TA</label>
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="file_draft" name="file_draft">
@@ -174,7 +181,7 @@
                     <input type="file" class="custom-file-input" id="file_persetujuan" name="file_persetujuan">
                     <label class="custom-file-label">Choose file</label>
                   </div>
-                </div> -->
+                </div>
 
               </div>
             </div>

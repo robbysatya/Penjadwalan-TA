@@ -14,7 +14,7 @@
             Back</a>
         </div>
         <div class="card-body">
-          <?= form_open_multipart('menu/data_user/editUser'); ?>
+          <?= form_open_multipart('menu/data_user/editUser/' . $user_recent['id']); ?>
           <?php $disabled = 0;
           $active = 1; ?>
           <form>
@@ -31,7 +31,8 @@
                 <div class="mb-3">
                   <label for="">Email</label>
                   <input type="email" class="form-control" id="email" name="email" placeholder="Email Mahasiswa"
-                    value="<?= $user_recent['email']; ?>" readonly>
+                    value="<?= $user_recent['email']; ?>">
+                  <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
 
                 <div class="mb-3">

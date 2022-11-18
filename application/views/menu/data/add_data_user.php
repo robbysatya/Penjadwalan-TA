@@ -14,7 +14,7 @@
             Back</a>
         </div>
         <div class="card-body">
-          <form action="<?= base_url('menu/data_user/addAccount') ?>" method="post">
+          <form action="<?= base_url('menu/data_user/addUser') ?>" method="post">
             <div class="modal-body">
               <div class="form-group">
                 <div class="mb-3">

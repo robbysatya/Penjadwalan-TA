@@ -52,18 +52,20 @@ class Data_User_model extends CI_Model
   }
 
   // FUNGSI EDIT DATA USER
-  public function update()
+  public function update($id = null)
   {
-    $post = $this->input->post();
-    $this->id = $post['id'];
-    $this->name = $post['name'];
-    $this->email = $post['email'];
-    $this->role_id = $post['role_id'];
-    $this->is_active = $post['is_active'];
-    $this->date_created = time();
+    $id = $this->input->post('id');
+    $name = $this->input->post('name');
+    $email = $this->input->post('email');
+    $role_id = $this->input->post('role_id');
+    $is_active = $this->input->post('is_active');
 
-
-    return $this->db->update('user', $this, array('id' => $post['id'], 'email' => $post['email']));
+    $this->db->set('name', $name);
+    $this->db->set('email', $email);
+    $this->db->set('role_id', $role_id);
+    $this->db->set('is_active', $is_active);
+    $this->db->where('id', $id);
+    $this->db->update('user');
   }
 
   // Fungsi Delete Data User

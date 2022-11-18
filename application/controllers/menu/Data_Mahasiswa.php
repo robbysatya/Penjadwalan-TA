@@ -25,9 +25,11 @@ class Data_Mahasiswa extends CI_Controller
 
     $data['data_mahasiswa'] = $this->db->get('user')->result_array();
     $data['data_mahasiswa'] = $this->mahasiswa_model->getKeahlian();
-    $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
     $data['data_ujian'] = $this->mahasiswa_model->getUjian();
+    $data['data_dosen'] = $this->mahasiswa_model->getDosen();
+    $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
     $data['list_data_ujian'] = $this->db->get('tb_jenis_ujian')->result_array();
+    $data['list_data_dosen'] = $this->db->get('tb_dosen')->result_array();
 
     $this->load->view('templates/header', $data);
     $this->load->view('templates/sidebar', $data);

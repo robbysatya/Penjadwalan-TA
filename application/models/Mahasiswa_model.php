@@ -38,7 +38,7 @@ class Mahasiswa_model extends CI_Model
   public function getKeahlian()
   {
     $query = "SELECT `user`.*, `tb_keahlian`.`keahlian`
-              FROM `user` JOIN `tb_keahlian`
+              FROM `user` INNER JOIN `tb_keahlian`
               ON `user`.`keahlian_id` = `tb_keahlian`.`id`";
     return $this->db->query($query)->result_array();
   }
@@ -47,8 +47,18 @@ class Mahasiswa_model extends CI_Model
   public function getUjian()
   {
     $query = "SELECT `user`.*, `tb_jenis_ujian`.`jenis_ujian`
-              FROM `user` JOIN `tb_jenis_ujian`
+              FROM `user` INNER JOIN `tb_jenis_ujian`
               ON `user`.`id_jenis_ujian` = `tb_jenis_ujian`.`id`";
+    return $this->db->query($query)->result_array();
+  }
+
+  // GET DATA JENIS UJIAN
+  public function getDosen()
+  {
+    $query = "SELECT `user`.*, `tb_dosen`.`name`
+              FROM `user` INNER JOIN `tb_dosen`
+              ON `user`.`dosbim_1` = `tb_dosen`.`id`
+              OR `user`.`dosbim_2` = `tb_dosen`.`id`";
     return $this->db->query($query)->result_array();
   }
 
@@ -61,8 +71,11 @@ class Mahasiswa_model extends CI_Model
   }
 
   // FUNGSI MODEL EDIT/UPDATE
-  public function update()
+  public function update($id = null)
   {
+
+    $data['user'] = $this->db->get_where('user', ['id' => $id]);
+
     $post = $this->input->post();
     $this->id = $post['id'];
     $this->nim = $post['nim'];
@@ -71,11 +84,28 @@ class Mahasiswa_model extends CI_Model
     $this->topik = $post['topik'];
     $this->keahlian_id = $post['keahlian_id'];
     $this->id_jenis_ujian = $post['id_jenis_ujian'];
-    // $this->dosbim_1 = $post['dosbim_1'];
-    // $this->dosbim_2 = $post['dosbim_2'];
-    // $this->file_draft = $post['file_draft'];
-    // $this->file_ppt = $post['file_ppt'];
-    // $this->file_persetujuan = $post['file_persetujuan'];
+    $this->dosbim_1 = $post['dosbim_1'];
+    $this->dosbim_2 = $post['dosbim_2'];
+    $this->file_draft = $_FILES['file_draft'];
+    $this->file_ppt = $_FILES['file_ppt'];
+    $this->file_persetujuan = $_FILES['file_persetujuan'];
+
+    $config['upload_path'] = './assets/files/';
+    $config['allowed_types'] = 'pdf';
+    $config['max_size']     = '5120';
+
+    $this->load->library('upload', $config);
+
+    $this->upload->do_upload('file_draft');
+    $this->upload->do_upload('file_ppt');
+    $this->upload->do_upload('file_persetujuan');
+    $old_file = $this->db->query("SELECT file_draft, file_ppt, file_persetujuan FROM user WHERE id='$id'")->row();
+    unlink(FCPATH . 'assets/files/' . $old_file);
+
+    $new_file = $this->upload->data('file_name');
+    $this->db->set('file_draft', $new_file);
+    $this->db->set('file_ppt', $new_file);
+    $this->db->set('file_persetujuan', $new_file);
 
     return $this->db->update('user', $this, array('id' => $post['id']));
   }

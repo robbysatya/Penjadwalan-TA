@@ -11,6 +11,7 @@ class Dosen_model extends CI_Model
 
   public function rules()
   {
+    $this->form_validation->set_rules('nip', 'NIP', 'trim|required');
     $this->form_validation->set_rules('nidn', 'NIDN', 'trim|required');
     $this->form_validation->set_rules('name', 'Name', 'trim|required');
     $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
@@ -57,6 +58,7 @@ class Dosen_model extends CI_Model
     $post = $this->input->post();
     $this->id = $post['id'];
     $this->nip = $post['nip'];
+    $this->nidn = $post['nidn'];
     $this->name = $post['name'];
     $this->email = $post['email'];
     $this->keahlian_id = $post['keahlian_id'];

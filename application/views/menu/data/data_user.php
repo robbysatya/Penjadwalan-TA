@@ -65,7 +65,7 @@
 
     <!-- Modal Fitur -->
 
-    <!-- Modal Delete Data Dosen -->
+    <!-- Modal Delete Data User -->
     <?php foreach ($data_user as $du) : ?>
     <div class="modal fade" id="deleteDataUserModal<?= $du['id']; ?>" tabindex="-1"
       aria-labelledby="deleteDataDosenLabel" aria-hidden="true">

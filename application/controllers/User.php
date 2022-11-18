@@ -12,6 +12,9 @@ class User extends CI_Controller
     } else if ($this->session->userdata('role_id') == null) {
       redirect('auth');
     }
+    $this->load->model('user_model');
+    $this->load->model('mahasiswa_model');
+    $this->load->library('form_validation');
   }
 
 
@@ -43,35 +46,7 @@ class User extends CI_Controller
       $this->load->view('user/edit', $data);
       $this->load->view('templates/footer');
     } else {
-      $nim = $this->input->post('nim');
-      $name = $this->input->post('name');
-      $email = $this->input->post('email');
-
-      // Cek jika ada gambar yang akan diupload
-      $upload_image = $_FILES['image'];
-      if ($upload_image) {
-        $config['upload_path'] = './assets/img/profile/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg';
-        $config['max_size']     = '2048';
-
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload('image')) {
-          $old_image = $data['user']['image'];
-          if ($old_image != 'default.jpg') {
-            unlink(FCPATH . 'assets/img/profile/' . $old_image);
-          }
-
-          $new_image = $this->upload->data('file_name');
-          $this->db->set('image', $new_image);
-        }
-      }
-
-
-      $this->db->set('nim', $nim);
-      $this->db->set('name', $name);
-      $this->db->where('email', $email);
-      $this->db->update('user');
+      $this->user_model->edit();
 
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Profile has been updated!</div>');
       redirect('user');
@@ -95,26 +70,58 @@ class User extends CI_Controller
       $this->load->view('user/changepassword', $data);
       $this->load->view('templates/footer');
     } else {
-      $current_password = $this->input->post('current_password');
-      $new_password = $this->input->post('new_password1');
+      $this->user_model->changepassword();
 
-      if (!password_verify($current_password, $data['user']['password'])) {
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong current password!</div>');
-        redirect('user/changepassword');
-      } else if ($current_password == $new_password) {
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">New password cannot be same the current password!</div>');
-        redirect('user/changepassword');
-      } else {
-        // Password sudah ok
-        $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-
-        $this->db->set('password', $password_hash);
-        $this->db->where('email', $this->session->userdata('email'));
-        $this->db->update('user');
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password changed!</div>');
-        redirect('user/changepassword');
-      }
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password changed!</div>');
+      redirect('user/changepassword');
     }
+  }
+
+  public function daftar_sidang()
+  {
+    $data['title'] = 'Daftar Sidang';
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+    $data['data_mahasiswa'] = $this->db->get('user')->result_array();
+    $data['data_mahasiswa'] = $this->mahasiswa_model->getKeahlian();
+    $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
+    $data['data_ujian'] = $this->mahasiswa_model->getUjian();
+    $data['list_data_ujian'] = $this->db->get('tb_jenis_ujian')->result_array();
+    $data['data_dosen'] = $this->mahasiswa_model->getDosen();
+    $data['list_data_dosen'] = $this->db->get('tb_dosen')->result_array();
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/sidebar', $data);
+    $this->load->view('templates/topbar', $data);
+    $this->load->view('user/daftar_sidang', $data);
+    $this->load->view('templates/footer');
+  }
+
+  public function save_daftar_sidang()
+  {
+    $data['title'] = 'Form Daftar Sidang';
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+    $data['data_mahasiswa'] = $this->db->get('user')->result_array();
+    $data['data_mahasiswa'] = $this->mahasiswa_model->getKeahlian();
+    $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
+    $data['data_ujian'] = $this->mahasiswa_model->getUjian();
+    $data['list_data_ujian'] = $this->db->get('tb_jenis_ujian')->result_array();
+    $data['data_dosen'] = $this->mahasiswa_model->getDosen();
+    $data['list_data_dosen'] = $this->db->get('tb_dosen')->result_array();
+
+    $this->user_model->save_daftar_sidang();
+
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pendaftaran Berhasil!</div>');
+    redirect('user/daftar_sidang');
+  }
+
+  public function batal_daftar()
+  {
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+    $this->user_model->batal_daftar_sidang();
+
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembatalan Berhasil!</div>');
+    redirect('user/daftar_sidang');
   }
 }

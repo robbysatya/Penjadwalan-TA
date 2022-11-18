@@ -147,7 +147,7 @@
 
    <!-- Nav Item - Daftar -->
    <li class="nav-item">
-     <a class="nav-link" href="charts.html">
+     <a class="nav-link" href="<?= base_url('user/daftar_sidang'); ?>">
        <i class="fas fa-fw fa-file-alt"></i>
        <span>Daftar Sidang</span></a>
    </li>
