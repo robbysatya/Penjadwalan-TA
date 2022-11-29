@@ -15,7 +15,7 @@
           class="fas fa-fw fa-plus"></i> Add Data Dosen</a>
 
       <!-- DataTables -->
-      <div class="card shadow mb-4">
+      <div class="card mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Tabel Data Dosen</h6>
         </div>

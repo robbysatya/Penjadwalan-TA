@@ -57,7 +57,7 @@
 
    <!-- Heading -->
    <div class="sidebar-heading">
-     Menu Administrator
+     Menu Admin
    </div>
 
    <!-- Nav Item - Pages Collapse Menu -->
@@ -65,17 +65,48 @@
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPages" aria-expanded="true"
        aria-controls="collapsePages">
        <i class="fas fa-fw fa-folder"></i>
-       <span>Data</span>
+       <span>Data Dosen</span>
      </a>
      <div id="dataPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
        <div class="bg-white py-2 collapse-inner rounded">
          <a class="collapse-item" href="<?= base_url('menu/data_dosen') ?>">Data Dosen</a>
-         <a class="collapse-item" href="<?= base_url('menu/data_mahasiswa') ?>">Data Mahasiswa</a>
          <a class="collapse-item" href="forgot-password.html">Data Jadwal Dosen</a>
          <div class="collapse-divider"></div>
        </div>
      </div>
    </li>
+
+   <!-- Nav Item - Pages Collapse Menu -->
+   <li class="nav-item">
+     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPagesMahasiswa" aria-expanded="true"
+       aria-controls="collapsePages">
+       <i class="fas fa-fw fa-folder"></i>
+       <span>Data Mahasiswa</span>
+     </a>
+     <div id="dataPagesMahasiswa" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+       <div class="bg-white py-2 collapse-inner rounded">
+         <a class="collapse-item" href="<?= base_url('menu/data_mahasiswa_proposal') ?>">Data Seminar Proposal</a>
+         <a class="collapse-item" href="<?= base_url('menu/data_mahasiswa_sidang') ?>">Data Sidang Akhir</a>
+         <div class="collapse-divider"></div>
+       </div>
+     </div>
+   </li>
+ 
+	 <!-- Nav Item - Pages Collapse Menu -->
+   <!-- <li class="nav-item">
+     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPagesHistoryMahasiswa" aria-expanded="true"
+       aria-controls="collapsePages">
+       <i class="fas fa-fw fa-folder"></i>
+       <span>History</span>
+     </a>
+     <div id="dataPagesHistoryMahasiswa" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+       <div class="bg-white py-2 collapse-inner rounded">
+         <a class="collapse-item" href="<?= base_url('menu/data_mahasiswa_proposal') ?>">History Seminar Proposal</a>
+         <a class="collapse-item" href="<?= base_url('menu/data_mahasiswa_sidang') ?>">History Sidang Akhir</a>
+         <div class="collapse-divider"></div>
+       </div>
+     </div>
+   </li> -->
 
    <li class="nav-item">
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jadwalPages" aria-expanded="true"
