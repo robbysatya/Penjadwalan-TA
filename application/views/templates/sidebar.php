@@ -6,7 +6,7 @@
      <div class="sidebar-brand-icon rotate-n-15">
        <i class="fas fa-sitemap"></i>
      </div>
-     <div class="sidebar-brand-text mx-3">Penjadwalan TA IF</div>
+     <div class="sidebar-brand-text mx-3">SIPETA IF</div>
    </a>
 
 
@@ -49,7 +49,7 @@
    <li class="nav-item">
      <a class="nav-link" href="<?= base_url('user/changepassword') ?>">
        <i class="fas fa-fw fa-key"></i>
-       <span>Change Password</span></a>
+       <span>Ubah Password</span></a>
    </li>
 
    <!-- Divider -->
@@ -70,7 +70,7 @@
      <div id="dataPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
        <div class="bg-white py-2 collapse-inner rounded">
          <a class="collapse-item" href="<?= base_url('menu/data_dosen') ?>">Data Dosen</a>
-         <a class="collapse-item" href="forgot-password.html">Data Jadwal Dosen</a>
+         <a class="collapse-item" href="<?= base_url('menu/data_jadwal_dosen');?>">Data Jadwal Dosen</a>
          <div class="collapse-divider"></div>
        </div>
      </div>
@@ -81,7 +81,7 @@
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPagesMahasiswa" aria-expanded="true"
        aria-controls="collapsePages">
        <i class="fas fa-fw fa-folder"></i>
-       <span>Data Mahasiswa</span>
+       <span>Data Pendaftaran</span>
      </a>
      <div id="dataPagesMahasiswa" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
        <div class="bg-white py-2 collapse-inner rounded">
@@ -92,7 +92,7 @@
      </div>
    </li>
  
-	 <!-- Nav Item - Pages Collapse Menu -->
+	 <!-- History Data Mahasiswa Sempro dan Sidang -->
    <!-- <li class="nav-item">
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPagesHistoryMahasiswa" aria-expanded="true"
        aria-controls="collapsePages">
@@ -108,16 +108,33 @@
      </div>
    </li> -->
 
+	 <!-- Navigation Buat Jadwal -->
+   <li class="nav-item">
+     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#buatjadwalPages" aria-expanded="true"
+       aria-controls="collapsePages">
+       <i class="fas fa-fw fa-calendar-plus"></i>
+       <span>Buat Penjadwalan</span>
+     </a>
+     <div id="buatjadwalPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+       <div class="bg-white py-2 collapse-inner rounded">
+         <a class="collapse-item" href="<?= base_url('menu/buat_jadwal_proposal') ?>">Buat Jadwal Sempro</a>
+         <a class="collapse-item" href="<?= base_url('menu/buat_jadwal_sidang') ?>">Buat Jadwal Sidang</a>
+         <div class="collapse-divider"></div>
+       </div>
+     </div>
+   </li>
+
+	 <!-- Navigation Jadwal -->
    <li class="nav-item">
      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jadwalPages" aria-expanded="true"
        aria-controls="collapsePages">
        <i class="fas fa-fw fa-calendar-week"></i>
-       <span>Penjadwalan</span>
+       <span>Jadwal</span>
      </a>
      <div id="jadwalPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
        <div class="bg-white py-2 collapse-inner rounded">
-         <a class="collapse-item" href="login.html">Buat Jadwal</a>
-         <a class="collapse-item" href="register.html">Jadwal Sidang</a>
+         <a class="collapse-item" href="<?= base_url('jadwal/jadwal_proposal') ?>">Jadwal Sempro</a>
+         <a class="collapse-item" href="<?= base_url('menu/jadwal_sidang') ?>">Jadwal Sidang</a>
          <div class="collapse-divider"></div>
        </div>
      </div>
@@ -173,7 +190,7 @@
    <li class="nav-item">
      <a class="nav-link" href="<?= base_url('user/changepassword') ?>">
        <i class="fas fa-fw fa-key"></i>
-       <span>Change Password</span></a>
+       <span>Ubah Password</span></a>
    </li>
 
    <!-- Nav Item - Daftar -->

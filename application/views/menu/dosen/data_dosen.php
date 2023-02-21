@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
       <!-- Page Heading -->
-      <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+      <h1 class="h3 mb-2 text-gray-800"><?= $title; ?></h1>
 
       <?php if (validation_errors()) : ?>
       <div class="alert alert-danger" role="alert">
@@ -11,8 +11,8 @@
       <?php endif; ?>
       <?= $this->session->flashdata('message');  ?>
       <!-- Modal Trigger -->
-      <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newDataDosenModal"><i
-          class="fas fa-fw fa-plus"></i> Add Data Dosen</a>
+      <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#newDataDosenModal"><i
+          class="fas fa-fw fa-plus"></i> Tambah Data Dosen</button>
 
       <!-- DataTables -->
       <div class="card mb-4">
@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>No</th>
@@ -60,7 +60,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <!-- /.container-fluid -->
 

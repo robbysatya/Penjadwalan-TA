@@ -43,11 +43,21 @@
     <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+
+		<!-- Core plugin JavaScript-->
+    <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="<?= base_url('assets/'); ?>vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="<?= base_url('assets/'); ?>js/demo/datatables-demo.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-migrate-3.4.0.js"
-      integrity="sha256-0Nkb10Hnhm4EJZ0QDpvInc3bRp77wQIbIQmWYH3Y7Vw=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.0.js" integrity="sha256-0Nkb10Hnhm4EJZ0QDpvInc3bRp77wQIbIQmWYH3Y7Vw=" crossorigin="anonymous"></script> -->
 
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -56,19 +66,23 @@
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
     <script type="text/javascript">
-$('.custom-file-input').on('change', function() {
-  let fileName = $(this).val().split('\\').pop();
-  $(this).next('.custom-file-label').addClass("selected").html(fileName);
-});
+			$('.custom-file-input').on('change', function() {
+				let fileName = $(this).val().split('\\').pop();
+				$(this).next('.custom-file-label').addClass("selected").html(fileName);
+			});
 
-$(function() {
-  $('.navbar-nav .nav-item a').filter(function() {
-    return this.href == location.href
-  }).parent().addClass('active').siblings().removeClass('active')
-  $('.navbar-nav .nav-item a').click(function() {
-    $(this).parent().addClass('active').siblings().removeClass('active')
-  })
-});
+			$(function() {
+				$('.navbar-nav .nav-item a').filter(function() {
+					return this.href == location.href
+				}).parent().addClass('active').siblings().removeClass('active')
+				$('.navbar-nav .nav-item a').click(function() {
+					$(this).parent().addClass('active').siblings().removeClass('active')
+				})
+			});
+
+			function redirect(url){
+    		location.href = url;
+    	}
     </script>
 
     </body>

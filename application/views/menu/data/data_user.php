@@ -8,8 +8,7 @@
       <?= $this->session->flashdata('message');  ?>
 
       <!-- Button Add Trigger -->
-      <a href="<?= base_url('menu/data_user/add') ?>" class="btn btn-primary mb-3"><i class="fas fa-fw fa-plus"></i> Add
-        Account</a>
+      <a href="<?= base_url('menu/data_user/add') ?>" class="btn btn-primary mb-3"><i class="fas fa-fw fa-plus"></i> Tambah Akun</a>
 
       <!-- DataTales Example -->
       <div class="card shadow mb-4">

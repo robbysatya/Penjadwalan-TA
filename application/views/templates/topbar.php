@@ -14,6 +14,7 @@
 
       <!-- Topbar Navbar -->
       <ul class="navbar-nav ml-auto">
+				<li class="nav-item no-arrow pt-2"> <img src="<?= base_url('assets/')?>img/logo_if.png" style="height: 50px;"></li>
 
         <div class="topbar-divider d-none d-sm-block"></div>
 

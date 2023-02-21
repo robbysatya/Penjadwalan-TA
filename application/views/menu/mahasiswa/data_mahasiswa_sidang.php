@@ -35,7 +35,6 @@
                   <th>Nama</th>
                   <th>Judul Topik</th>
                   <th>Kelompok Keahlian</th>
-                  <th>Email</th>
                   <th>Jenis Ujian</th>
                   <th>Dosbim 1</th>
                   <th>Dosbim 2</th>
@@ -55,7 +54,6 @@
                   <td><?= $dm['name']; ?></td>
                   <td><?= $dm['judul']; ?></td>
                   <td><?= $data_keahlian[$d]['keahlian']; ?></td>
-                  <td><?= $dm['email']; ?></td>
                   <td><?= $data_ujian[$d]['jenis_ujian']; ?></td>
 									<td><?= $data_dosen_1[$d]['name']; ?></td>
 									<td><?= $data_dosen_2[$d]['name']; ?></td>
@@ -89,8 +87,12 @@
                     <button type="button" class="btn btn-warning" data-toggle="modal"
                       data-target="#terimaSidang<?= $dm['nim']; ?>"><i class="fas fa-fw fa-check"></i>
                       Terima</button>
+                    <?php } else if ($dm['status'] == 5) { ?>
+											<button type="button" class="btn btn-success" data-toggle="modal"
+                      data-target="#lulusSidang<?= $dm['nim']; ?>"><i class="fas fa-fw fa-check"></i>
+                      Lulus</button>
                     <?php } else { ?>
-											Selesai
+											Sudah Lulus
 										<?php } ?>
                   </td>
                 </tr>
@@ -111,17 +113,47 @@
 
     <!-- Modal Terima Sidang -->
     <?php foreach ($data_mahasiswa as $d => $dm) : ?>
-    <div class="modal fade" id="terimaSidang<?= $dm['nim']; ?>" tabindex="-1" aria-labelledby="deleteDataDosenLabel"
+    <div class="modal fade" id="terimaSidang<?= $dm['nim']; ?>" tabindex="-1" aria-labelledby="terimaSidangLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteDataDosenLabel">Terima Pendaftaran Sidang Akhir</h5>
+            <h5 class="modal-title" id="terimaSidangLabel">Terima Pendaftaran Sidang Akhir</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <form action="<?= base_url('menu/data_mahasiswa_sidang/terimaSidang') ?>" method="post">
+            <div class="modal-body">
+              <p>Apakah kamu yakin menerima pendaftaran <b><?= $dm['name']; ?></b>? </p>
+              <p class="m-0 font-weight-bold" style="color: red;">*Pastikan persyaratan pendaftaran sudah benar!</p>
+              <input type="text" class="form-control" id="nim" name="nim" placeholder="ID" required
+                value="<?= $dm['nim']; ?>" hidden>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-fw fa-times"></i>
+                No</button>
+              <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-check"></i> Yes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <?php endforeach; ?>
+
+    <!-- Modal Lulus Sidang -->
+    <?php foreach ($data_mahasiswa as $d => $dm) : ?>
+    <div class="modal fade" id="lulusSidang<?= $dm['nim']; ?>" tabindex="-1" aria-labelledby="lulusSidangLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="lulusSidangLabel">Terima Pendaftaran Sidang Akhir</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="<?= base_url('menu/data_mahasiswa_sidang/lulusSidang') ?>" method="post">
             <div class="modal-body">
               <p>Apakah kamu yakin menerima pendaftaran <b><?= $dm['name']; ?></b>? </p>
               <p class="m-0 font-weight-bold" style="color: red;">*Pastikan persyaratan pendaftaran sudah benar!</p>

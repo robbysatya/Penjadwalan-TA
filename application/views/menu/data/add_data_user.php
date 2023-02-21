@@ -11,12 +11,18 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <a href="<?= base_url('menu/data_user') ?>"><i class="fas fa-fw fa-arrow-left"></i>
-            Back</a>
+            Kembali</a>
         </div>
         <div class="card-body">
           <form action="<?= base_url('menu/data_user/addUser') ?>" method="post">
             <div class="modal-body">
               <div class="form-group">
+                <div class="mb-3">
+                  <label for="">NIM</label>
+                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa"
+                    value="<?= set_value('nim'); ?>">
+                  <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
+                </div>
                 <div class="mb-3">
                   <label for="">Nama Lengkap</label>
                   <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa"
@@ -60,8 +66,7 @@
                 </div>
               </div>
               <div class="d-flex flex-row justify-content-end mt-auto pt-3">
-                <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Add
-                  Account</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
               </div>
             </div>
           </form>

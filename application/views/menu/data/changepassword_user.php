@@ -8,7 +8,7 @@
         <div class="card-header py-3">
           <a href="<?= base_url('menu/data_user/edit/' . $user_recent['id']); ?>"><i
               class="fas fa-fw fa-arrow-left"></i>
-            Back</a>
+            Kembali</a>
         </div>
         <div class="card-body">
           <div class="row">
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="d-flex flex-row justify-content-end mt-auto pt-3">
-                  <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-key"></i> Change
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-key"></i> Ubah
                     Password</button>
                 </div>
               </form>

@@ -31,7 +31,7 @@ class Auth extends CI_Controller
 		$password = $this->input->post('password');
 
 		if ($this->form_validation->run() == false && $this->session) {
-			$data['title'] = 'Masuk | Sistem Penjadwalan TA';
+			$data['title'] = 'Masuk | SIPETA IF';
 			$this->load->view('templates/auth_header', $data);
 			$this->load->view('auth/login');
 			$this->load->view('templates/auth_footer');
@@ -50,7 +50,7 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
 
 		if ($this->form_validation->run() == false) {
-			$data['title'] = 'Daftar Akun Sistem TA';
+			$data['title'] = 'Daftar Akun | SIPETA IF';
 			$this->load->view('templates/auth_header', $data);
 			$this->load->view('auth/register');
 			$this->load->view('templates/auth_footer');

@@ -36,7 +36,6 @@
                   <th>Nama</th>
                   <th>Judul Topik</th>
                   <th>Kelompok Keahlian</th>
-                  <th>Email</th>
                   <th>Jenis Ujian</th>
                   <th>Dosbim 1</th>
                   <th>Dosbim 2</th>
@@ -56,7 +55,6 @@
                   <td><?= $dm['name']; ?></td>
                   <td><?= $dm['judul']; ?></td>
                   <td><?= $data_keahlian[$d]['keahlian']; ?></td>
-                  <td><?= $dm['email']; ?></td>
                   <td><?= $data_ujian[$d]['jenis_ujian']; ?></td>
 									<td><?= $data_dosen_1[$d]['name']; ?></td>
 									<td><?= $data_dosen_2[$d]['name']; ?></td>
@@ -92,9 +90,12 @@
                       data-target="#lanjutSidang<?= $dm['nim']; ?>">Lanjut Sidang <i
                         class="fas fa-arrow-right"></i></button>
                     <?php } else if($dm['status'] == 2) { ?>
-                    <button type="button" class="btn btn-warning" data-toggle="modal"
+											<button type="button" class="btn btn-warning" data-toggle="modal"
                       data-target="#terimaSidang<?= $dm['nim']; ?>"><i class="fas fa-fw fa-check"></i>
-                      Terima</button>
+                      Terima</button><br><br>
+                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                      data-target="#tolakSidang<?= $dm['nim']; ?>"><i class="fas fa-fw fa-times"></i>
+                      Tolak</button>
 										<?php } else { ?>
                     <p>Siap Daftar Sidang</p>
                     <?php } ?>
@@ -122,7 +123,7 @@
       <div class="modal-dialog modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="dterimaSidangLabel">Terima Pendaftaran Seminar Proposal</h5>
+            <h5 class="modal-title" id="terimaSidangLabel">Terima Pendaftaran Seminar Proposal</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -138,6 +139,36 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-fw fa-times"></i>
                 No</button>
               <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-check"></i> Yes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <?php endforeach; ?>
+
+
+    <!-- Modal Tolak Sempro -->
+    <?php foreach ($data_mahasiswa as $d => $dm) : ?>
+    <div class="modal fade" id="tolakSidang<?= $dm['nim']; ?>" tabindex="-1" aria-labelledby="tolakSidangLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tolakSidangLabel">Tolak Pendaftaran Seminar Proposal</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="<?= base_url('menu/data_mahasiswa_proposal/tolakSidang') ?>" method="post">
+            <div class="modal-body">
+              <p>Apakah kamu yakin menolak pendaftaran <b><?= $dm['name']; ?></b>? </p>
+              <input type="text" class="form-control" id="nim" name="nim" placeholder="ID" required
+                value="<?= $dm['nim']; ?>" hidden>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-fw fa-times"></i>
+                No</button>
+              <button type="submit" class="btn btn-danger"><i class="fas fa-fw fa-check"></i> Yes</button>
             </div>
           </form>
         </div>

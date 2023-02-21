@@ -37,7 +37,7 @@ class Data_User extends CI_Controller
   // Fungsi pada controller untuk menampilkan form add data user
   public function add()
   {
-    $data['title'] = 'Add Data User';
+    $data['title'] = 'Tambah Data User';
     $data['user'] = $this->db->get_where('user', ['email' =>
     $this->session->userdata('email')])->row_array();
 
@@ -60,7 +60,7 @@ class Data_User extends CI_Controller
     $validation->set_rules($data_user->rules());
 
     if ($validation->run() == false) {
-      $data['title'] = 'Add Data User';
+      $data['title'] = 'Tambah Data User';
       $data['user'] = $this->db->get_where('user', ['email' =>
       $this->session->userdata('email')])->row_array();
 
@@ -109,7 +109,8 @@ class Data_User extends CI_Controller
 
     $data_user =  $this->data_user_model;
     $this->form_validation->set_rules('name', 'Name', 'required|trim');
-    $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'This email has already registered!']);
+    $this->form_validation->set_rules('nim', 'NIM', 'required|trim|is_unique[user.nim]', ['is_unique' => 'This NIM has already registered!']);
+    // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'This email has already registered!']);
 
     if ($this->form_validation->run() == false) {
       $data['user_recent'] = $this->data_user_model->getById($id);

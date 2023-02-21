@@ -54,4 +54,19 @@ class Data_Mahasiswa_Sidang extends CI_Controller
 
 		redirect('menu/data_mahasiswa_sidang');
 	}
+
+	public function lulusSidang()
+	{
+		$nim = $this->input->post('nim');
+		
+		$this->db->set('status', 6);
+		$this->db->where('nim', $nim);
+		$this->db->update('tb_sidang');
+
+		$this->db->set('status', 6);
+		$this->db->where('nim', $nim);
+		$this->db->update('user');
+
+		redirect('menu/data_mahasiswa_sidang');
+	}
 }

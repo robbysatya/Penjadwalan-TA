@@ -39,6 +39,7 @@ class Data_User_model extends CI_Model
   public function save()
   {
     $post = [
+      'nim' => htmlspecialchars($this->input->post('nim', true)),
       'name' => htmlspecialchars($this->input->post('name', true)),
       'email' => htmlspecialchars($this->input->post('email', true)),
       'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
@@ -55,11 +56,13 @@ class Data_User_model extends CI_Model
   public function update($id = null)
   {
     $id = $this->input->post('id');
+    $nim = $this->input->post('nim');
     $name = $this->input->post('name');
     $email = $this->input->post('email');
     $role_id = $this->input->post('role_id');
     $is_active = $this->input->post('is_active');
 
+    $this->db->set('nim', $nim);
     $this->db->set('name', $name);
     $this->db->set('email', $email);
     $this->db->set('role_id', $role_id);

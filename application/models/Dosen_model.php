@@ -19,15 +19,50 @@ class Dosen_model extends CI_Model
     $this->form_validation->set_rules('kuota', 'Kuota', 'trim|required');
   }
 
-  public function getAll()
+  public function getDosen()
   {
-    $this->db->get_where('tb_dosen')->result_array();
+    return $this->db->get('tb_dosen')->result_array();
   }
 
   // FUNGSI MODEL GET ID
   public function getById($id)
   {
-    $this->db->get_where('tb_dosen', ['id' => $id])->row_array();
+    return $this->db->get_where('tb_dosen', ['id' => $id])->row_array();
+  }
+
+	public function getJadwalDosen()
+  {
+    return $this->db->get('tb_jadwal_dosen')->result_array();
+  }
+
+	public function getJamDosen()
+  {
+		$this->db->select('*');
+		$this->db->from('tb_jam');
+		$this->db->join('tb_jadwal_dosen', 'tb_jadwal_dosen.jam = tb_jam.kode_jam');
+		$query = $this->db->get();
+
+		return $query->result_array();
+  }
+	
+	public function getHariDosen()
+  {
+		$this->db->select('*');
+		$this->db->from('tb_hari');
+		$this->db->join('tb_jadwal_dosen', 'tb_jadwal_dosen.hari = tb_hari.kode_hari');
+		$query = $this->db->get();
+
+		return $query->result_array();
+  }
+
+	public function getNamaDosen()
+  {
+		$this->db->select('*');
+		$this->db->from('tb_dosen');
+		$this->db->join('tb_jadwal_dosen', 'tb_jadwal_dosen.id_dosen = tb_dosen.id');
+		$query = $this->db->get();
+
+		return $query->result_array();
   }
 
   public function getKeahlian()
@@ -70,6 +105,21 @@ class Dosen_model extends CI_Model
   // FUNGSI MODEL DELETE
   public function delete($id)
   {
-    return $this->db->delete('tb_dosen', array('id' => $id));
+    return $this->db->delete('tb_jadwal_dosen', array('id' => $id));
   }
+
+	// SIMPAN JADWAL
+	public function save_jadwal(){
+		$id_dosen = $this->input->post('id_dosen');
+		$hari = $this->input->post('hari');
+		$jam = $this->input->post('jam');
+
+		$jumlah = count($jam);
+
+		for($i = 0; $i < $jumlah; $i++){
+			$save_db = $this->db->query("INSERT INTO tb_jadwal_dosen VALUES (0, '$id_dosen','$hari','$jam[$i]');");
+		}
+
+		return $save_db;
+	}
 }

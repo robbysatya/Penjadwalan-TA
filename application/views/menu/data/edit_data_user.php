@@ -11,7 +11,7 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <a href="<?= base_url('menu/data_user') ?>"><i class="fas fa-fw fa-arrow-left"></i>
-            Back</a>
+            Kembali</a>
         </div>
         <div class="card-body">
           <?= form_open_multipart('menu/data_user/editUser/' . $user_recent['id']); ?>
@@ -22,6 +22,12 @@
               <div class="form-group">
                 <input type="text" class="form-control" id="id" name="id" placeholder="ID"
                   value="<?= $user_recent['id']; ?>" hidden>
+                <div class="mb-3">
+                  <label for="">NIM</label>
+                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa"
+                    value="<?= $user_recent['nim']; ?>">
+                  <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
+                </div>
                 <div class="mb-3">
                   <label for="">Nama Lengkap</label>
                   <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa"
@@ -68,7 +74,7 @@
                 </div>
               </div>
               <div class="d-flex flex-row justify-content-end mt-auto pt-3">
-                <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-edit"></i> Save Edit</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-fw fa-edit"></i> Simpan Edit</button>
               </div>
             </div>
           </form>

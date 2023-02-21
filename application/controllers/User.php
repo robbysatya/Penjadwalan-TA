@@ -56,7 +56,7 @@ class User extends CI_Controller
 	public function changepassword()
 	{
 
-		$data['title'] = 'Change Password';
+		$data['title'] = 'Ubah Password';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
 		$this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
