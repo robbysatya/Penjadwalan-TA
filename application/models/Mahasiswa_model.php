@@ -104,7 +104,7 @@ class Mahasiswa_model extends CI_Model
 	// GET DATA SEMPRO
 	public function getDataAll_sempro()
 	{
-		$query = "SELECT `tb_proposal`.* FROM `tb_proposal` WHERE `status` = 2 OR `status` = 1";
+		$query = "SELECT `tb_proposal`.* FROM `tb_proposal` WHERE `status` = 2 OR `status` = 1 ORDER BY `date_created` DESC";
 
 		return $this->db->query($query)->result_array();
 	}
@@ -221,6 +221,7 @@ class Mahasiswa_model extends CI_Model
 	public function tolak_sempro($nim = null)
 	{
 		$data['user'] = $this->db->get_where('tb_proposal', ['nim' => $nim])->row_array();
+		$alasan = $this->input->post('alasan');
 
 		$old_file_draft = $data['user']['file_draft'];
 		$old_file_ppt = $data['user']['file_ppt'];
@@ -230,6 +231,7 @@ class Mahasiswa_model extends CI_Model
 		unlink(FCPATH . 'assets/files/' . $old_file_persetujuan);
 
 		$this->db->set('status', 0);
+		$this->db->set('alasan', $alasan);
 		$this->db->where('nim', $nim);
 		$this->db->update('user');
 

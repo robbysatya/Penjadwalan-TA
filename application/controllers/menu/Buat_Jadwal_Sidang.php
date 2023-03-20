@@ -18,7 +18,7 @@ class Buat_Jadwal_Sidang extends CI_Controller
 
   public function index()
   {
-    $data['title'] = 'Buat Jadwal Seminar Proposal';
+    $data['title'] = 'Buat Jadwal Sidang Akhir';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
     $this->load->view('templates/header', $data);
@@ -28,19 +28,19 @@ class Buat_Jadwal_Sidang extends CI_Controller
     $this->load->view('templates/footer');
   }
 
-	// public function getHari(){
-	// 	$hari = $this->db->get('tb_hari')->result_array();
-	// 	$output = '<option value="" selected="" disabled=""></option>';
-	// 	while($h=$hari->fetch(PDO::FETCH_ASSOC)){
-	// 			$output .= '<option value="'.$h["kode_hari"].'">'.$h["nama_hari"].'</option>';
-	// 	}
-	// 	echo $output;
-	// }
+  // public function getHari(){
+  // 	$hari = $this->db->get('tb_hari')->result_array();
+  // 	$output = '<option value="" selected="" disabled=""></option>';
+  // 	while($h=$hari->fetch(PDO::FETCH_ASSOC)){
+  // 			$output .= '<option value="'.$h["kode_hari"].'">'.$h["nama_hari"].'</option>';
+  // 	}
+  // 	echo $output;
+  // }
 
   public function add()
   {
-		$this->form_validation->set_rules('id_dosen', 'Dosen', 'trim|required');
-		$this->form_validation->set_rules('hari', 'Hari', 'trim|required');
+    $this->form_validation->set_rules('id_dosen', 'Dosen', 'trim|required');
+    $this->form_validation->set_rules('hari', 'Hari', 'trim|required');
 
     $data['data_jadwal_dosen'] = $this->dosen_model->getJadwalDosen();
 

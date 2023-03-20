@@ -162,6 +162,8 @@
           <form action="<?= base_url('menu/data_mahasiswa_proposal/tolakSidang') ?>" method="post">
             <div class="modal-body">
               <p>Apakah kamu yakin menolak pendaftaran <b><?= $dm['name']; ?></b>? </p>
+              <p>Berikan alasan penolakan anda : </p>
+              <input type="text" class="form-control" id="alasan" name="alasan" placeholder="Alasan" required>
               <input type="text" class="form-control" id="nim" name="nim" placeholder="ID" required
                 value="<?= $dm['nim']; ?>" hidden>
             </div>

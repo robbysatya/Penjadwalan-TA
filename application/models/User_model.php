@@ -183,6 +183,7 @@ class User_model extends CI_Model
 		$this->db->insert('tb_sidang');
 
 		$this->db->set('status', 4);
+		$this->db->set('alasan', null);
 		$this->db->where('email', $this->session->userdata('email'));
 		$this->db->update('user');
 	}
@@ -205,7 +206,7 @@ class User_model extends CI_Model
 		$this->db->where('email', $this->session->userdata('email'));
 		$this->db->update('user');
 	}
-	
+
 	public function batal_daftar_sidang()
 	{
 		$data['user'] = $this->db->get_where('tb_sidang', ['email' => $this->session->userdata('email')])->row_array();
@@ -223,5 +224,45 @@ class User_model extends CI_Model
 		$this->db->set('status', 3);
 		$this->db->where('email', $this->session->userdata('email'));
 		$this->db->update('user');
+	}
+
+	public function data_jadwal_user()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_jadwal_proposal');
+		$this->db->join('tb_proposal', 'tb_jadwal_proposal.kode_sp = tb_proposal.kode_sp');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getJam()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_jadwal_proposal');
+		$this->db->join('tb_jam', 'tb_jadwal_proposal.jam = tb_jam.kode_jam');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getHari()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_jadwal_proposal');
+		$this->db->join('tb_hari', 'tb_jadwal_proposal.hari = tb_hari.kode_hari');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getTanggal()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_jadwal_proposal');
+		$this->db->join('tb_proposal', 'tb_jadwal_proposal.kode_sp = tb_proposal.kode_sp');
+		$query = $this->db->get();
+
+		return $query->result_array();
 	}
 }

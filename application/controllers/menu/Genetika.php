@@ -34,11 +34,10 @@ class Genetika extends CI_Controller
 			redirect('auth/blocked');
 		}
 		$this->load->model('jadwal_model');
-		$this->load->library('session');
 
 		$this->RowsProposal = $params['kode_sp'];
-		$this->RowsHari = $params['hari'];
-		$this->RowsJam = $params['jam'];
+		$this->RowsHari = $params['kode_hari'];
+		$this->RowsJam = $params['kode_jam'];
 		$this->RowsDospeng1 = $params['id_dosen'];
 		$this->RowsDospeng2 = $params['id_dosen'];
 		$this->RowsDosbim1 = $params['dosbim_1'];
@@ -64,7 +63,7 @@ class Genetika extends CI_Controller
 		$dataHari = $this->jadwal_model->getJadwaHariDosen();
 		$no = 0;
 		foreach ($dataHari->result() as $data) {
-			$this->hari[$no] = intval($data->hari);
+			$this->hari[$no] = intval($data->kode_hari);
 			$no++;
 		}
 
@@ -72,7 +71,7 @@ class Genetika extends CI_Controller
 		$dataJam = $this->jadwal_model->getJadwalJamDosen();
 		$no = 0;
 		foreach ($dataJam->result() as $data) {
-			$this->jam[$no] = intval($data->jam);
+			$this->jam[$no] = intval($data->kode_jam);
 			$no++;
 		}
 
@@ -80,7 +79,7 @@ class Genetika extends CI_Controller
 		$dataDospeng1 = $this->jadwal_model->getJadwalDospeng1();
 		$no = 0;
 		foreach ($dataDospeng1->result() as $data) {
-			$this->id_dosen[$no] = intval($data->id_dosen);
+			$this->dospeng_1[$no] = intval($data->id);
 			$no++;
 		}
 
@@ -88,38 +87,26 @@ class Genetika extends CI_Controller
 		$dataDospeng2 = $this->jadwal_model->getJadwalDospeng2();
 		$no = 0;
 		foreach ($dataDospeng2->result() as $data) {
-			$this->id_dosen[$no] = intval($data->id_dosen);
+			$this->dospeng_2[$no] = intval($data->id);
 			$no++;
 		}
 	}
-	// Ambil Data Dosbim1
-	// $dataDosbim = $this->jadwal_model->getDosbim();
-	// $no = 0;
-	// foreach ($dataDosbim->result() as $data) {
-	// 	$this->dosbim_1[$no] = $data->dosbim_1;
-	// 	$this->dosbim_2[$no] = $data->dosbim_2;
-	// 	$no++;
-	// }
-	// Ambil Data Dosbim2
-	// $dataDosbim2 = $this->jadwal_model->getDosbim2();
-	// $no = 0;
-	// foreach($dataDosbim2->result() as $data){
-	// 	$this->dosbim_2[$no] = $data->dosbim_2;
-	// 	$no++;
-	// }
+
 
 	// INISIALISASI
-	public function Inisialisai($populasi)
+	public function Inisialisasi()
 	{
 		$RowsProposal =  count($this->kode_sp);
 		$RowsHari =  count($this->hari);
 		$RowsJam =  count($this->jam);
-		$RowsDospeng1 =  count($this->id_dosen);
-		$RowsDospeng2 =  count($this->id_dosen);
+		$RowsDospeng1 =  count($this->dospeng_1);
+		$RowsDospeng2 =  count($this->dospeng_2);
 
-		for ($i = 0; $i < $populasi; $i++) {
+		for ($i = 0; $i < $this->populasi; $i++) {
 			for ($j = 0; $j < $RowsProposal; $j++) {
-				$this->data_individu[$i][0] = $this->kode_up[$i];
+				$this->data_individu[$i][$j][0] = $this->kode_sp[$j];
+				$this->data_individu[$i][$j][5] = $this->dosbim_1[$j];
+				$this->data_individu[$i][$j][6] = $this->dosbim_2[$j];
 				$this->data2 = mt_rand(0, $RowsHari);
 				$this->data3 = mt_rand(0, $RowsJam);
 				$this->data4 = mt_rand(0, $RowsDospeng1);
@@ -149,31 +136,35 @@ class Genetika extends CI_Controller
 					$this->data_individu[$i][$j][4] = $this->data5;
 				}
 
-				$a = $this->data_individu[$i][$j][0];
+				// $a = $this->data_individu[$i][0];
+				$bb = $this->data_individu[$i][$j][1];
+				$cc = $this->data_individu[$i][$j][2];
 
-				$b = $this->data_individu[$i][$j][1];
-				$ccc = $this->data_individu[$i][$j][2];
+				// $d = $this->data_individu[$i][3];
+				// $e = $this->data_individu[$i][4];
 
-				if ($ccc >= 9) {
-					$c = 8;
+				if ($bb >= $RowsHari) {
+					$b = mt_rand(1, $RowsHari);
 				} else {
-					$c = $this->data_individu[$i][2];
+					$b = $this->data_individu[$i][$j][1];
 				}
 
-				$d = $this->data_individu[$i][3];
-
-				$this->db->query("INSERT INTO data_acak_sp VALUES ($a,$b,$c,$d)");
+				if ($cc >= $RowsJam) {
+					$c = mt_rand(1, $RowsJam);
+				} else {
+					$c = $this->data_individu[$i][$j][2];
+				}
 			}
 		}
 	}
 
-	private function CekFitness()
+	private function CekFitness($indv)
 	{
 
-		$penalty = 0;
-		// $penalty_jam = 0;
-		// $penalty_hari = 0;
-		// $penalty_dospeng = 0;
+		// $penalty = 0;
+		$penalty_jam = 0;
+		$penalty_hari = 0;
+		$penalty_dospeng = 0;
 
 		$RowsProposal =  count($this->kode_sp);
 
@@ -181,51 +172,57 @@ class Genetika extends CI_Controller
 			$hari_a = intval($this->data_individu[$i][1]);
 			$jam_a = intval($this->data_individu[$i][2]);
 			$dospeng_a = intval($this->data_individu[$i][3]);
-			$dosbim_a = intval($this->data_individu[$i][4]);
+			$dosbim_a = intval($this->data_individu[$i][5]);
 
 			for ($j = 0; $j < $RowsProposal; $j++) {
-				$hari_b = intval($this->data_individu[$i][1]);
-				$jam_b = intval($this->data_individu[$i][2]);
-				$dospeng_b = intval($this->data_individu[$i][3]);
-				$dosbim_b = intval($this->data_individu[$i][4]);
+				$hari_b = intval($this->data_individu[$j][1]);
+				$jam_b = intval($this->data_individu[$j][2]);
+				$dospeng_b = intval($this->data_individu[$j][4]);
+				$dosbim_b = intval($this->data_individu[$j][6]);
 
 				if ($i == $j) {
 					continue;
 				}
 				if ($jam_a == $jam_b) {
-					$penalty += 1;
+					$penalty_jam += 1;
 				}
 				if ($hari_a == $hari_b) {
-					$penalty += 1;
+					$penalty_hari += 1;
 				}
+				if ($hari_a == 5) {
+					$penalty_jam += 1;
+				}
+				if ($hari_b == 5) {
+					$penalty_jam += 1;
+				}
+
 				if ($dospeng_a == $dospeng_b) {
-					$penalty += 1;
+					$penalty_dospeng += 1;
 				}
 				if ($dosbim_a == $dospeng_a) {
-					$penalty += 1;
+					$penalty_dospeng += 1;
 				}
 				if ($dosbim_b == $dospeng_a) {
-					$penalty += 1;
+					$penalty_dospeng += 1;
 				}
 				if ($dosbim_a == $dospeng_b) {
-					$penalty += 1;
+					$penalty_dospeng += 1;
 				}
 				if ($dosbim_b == $dospeng_b) {
-					$penalty += 1;
+					$penalty_dospeng += 1;
 				}
 
 				// end loop j
 			}
+			$fitness = floatval(1 / (1 + $penalty_dospeng + $penalty_jam + $penalty_hari));
 			// end loop k
 		}
-		$fitness = (1 / (1 + $penalty));
-
-		return $fitness;
 	}
 
 	// HITUNG FITNESS
 	public function HitungFitness()
 	{
+		$fitness = [];
 		for ($indv = 0; $indv < $this->populasi; $indv++) {
 			$fitness[$indv] = $this->CekFitness($indv);
 		}
@@ -294,24 +291,24 @@ class Genetika extends CI_Controller
 				//penentuan jadwal baru dari awal sampai titik pertama
 				for ($j = 0; $j < $a; $j++) {
 					for ($k = 0; $k < 4; $k++) {
-						$individuBaru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
-						$individuBaru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
+						$individuBaru[$i][$j][$k]     = $this->data_individu[$this->induk[$i]][$j][$k];
+						$individuBaru[$i + 1][$j][$k] = $this->data_individu[$this->induk[$i + 1]][$j][$k];
 					}
 				}
 
 				// Penentuan jadwal baru dai titik pertama sampai titik kedua
 				for ($j = $a; $j < $b; $j++) {
 					for ($k = 0; $k < 4; $k++) {
-						$individuBaru[$i][$j][$k]     = $this->individu[$this->induk[$i + 1]][$j][$k];
-						$individuBaru[$i + 1][$j][$k] = $this->individu[$this->induk[$i]][$j][$k];
+						$individuBaru[$i][$j][$k]     = $this->data_individu[$this->induk[$i + 1]][$j][$k];
+						$individuBaru[$i + 1][$j][$k] = $this->data_individu[$this->induk[$i]][$j][$k];
 					}
 				}
 
 				// Penentuan jadwal baru dari titik kedua sampai akhir
 				for ($j = $b; $j < $RowsProposal; $j++) {
 					for ($k = 0; $k < 4; $k++) {
-						$individuBaru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
-						$individuBaru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
+						$individuBaru[$i][$j][$k]     = $this->data_individu[$this->induk[$i]][$j][$k];
+						$individuBaru[$i + 1][$j][$k] = $this->data_individu[$this->induk[$i + 1]][$j][$k];
 					}
 				}
 			} else {
@@ -319,23 +316,25 @@ class Genetika extends CI_Controller
 				// Ketika nilai random lebih dari nilai probabilitas pertukaran, maka jadwal baru sama dengan jadwal terpilih
 				for ($j = 0; $j < $RowsProposal; $j++) {
 					for ($k = 0; $k < 4; $k++) {
-						$individuBaru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
-						$individuBaru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
+						$individuBaru[$i][$j][$k]     = $this->data_individu[$this->induk[$i]][$j][$k];
+						$individuBaru[$i + 1][$j][$k] = $this->data_individu[$this->induk[$i + 1]][$j][$k];
 					}
 				}
 			}
 		}
 
-		$RowsProposal = count($this->RowsProposal);
+		$RowsProposal = count($this->kode_sp);
 
 		for ($i = 0; $i < $this->populasi; $i += 2) {
 			for ($j = 0; $j < $RowsProposal; $j++) {
 				for ($k = 0; $k < 4; $k++) {
-					$this->individu[$i][$j][$k] = $individuBaru[$i][$j][$k];
-					$this->individu[$i + 1][$j][$k] = $individuBaru[$i + 1][$j][$k];
+					$this->data_individu[$i][$j][$k] = $individuBaru[$i][$j][$k];
+					$this->data_individu[$i + 1][$j][$k] = $individuBaru[$i + 1][$j][$k];
 				}
 			}
 		}
+
+		return $individuBaru;
 	}
 
 	// MUTASI
@@ -347,8 +346,8 @@ class Genetika extends CI_Controller
 		$RowsProposal     = count($this->kode_sp);
 		$RowsJam          = count($this->jam);
 		$RowsHari         = count($this->hari);
-		$RowsDospeng1     = count($this->id_dosen);
-		$RowsDospeng2     = count($this->id_dosen);
+		$RowsDospeng1     = count($this->dospeng_1);
+		$RowsDospeng2     = count($this->dospeng_2);
 
 		for ($i = 0; $i < $this->populasi; $i++) {
 
@@ -360,31 +359,13 @@ class Genetika extends CI_Controller
 				//Penentuan pada matakuliah dan kelas yang mana yang akan dirandomkan atau diganti
 				$krom = mt_rand(0, $RowsProposal - 1);
 
-				$j = intval($this->sks[$krom]);
-
-				switch ($j) {
-					case 1:
-						$this->individu[$i][$krom][1] = mt_rand(0, $RowsJam - 1);
-						break;
-					case 2:
-						$this->individu[$i][$krom][1] = mt_rand(0, ($RowsJam - 1) - 1);
-						break;
-					case 3:
-						$this->individu[$i][$krom][1] = mt_rand(0, ($RowsJam - 1) - 2);
-						break;
-					case 4:
-						$this->individu[$i][$krom][1] = mt_rand(0, ($RowsJam - 1) - 3);
-						break;
-				}
+				$this->data_individu[$i][$krom][1] = mt_rand(0, $RowsJam - 1);
 				//Proses penggantian hari
-				$this->individu[$i][$krom][2] = mt_rand(0, $RowsHari - 1);
+				$this->data_individu[$i][$krom][2] = mt_rand(0, $RowsHari - 1);
 
 				//proses penggantian ruang               
-				if ($this->jenisMk[$krom] === $this->TEORI) {
-					$this->individu[$i][$krom][3] = $this->ruangReguler[mt_rand(0, $RowsDospeng1 - 1)];
-				} else {
-					$this->individu[$i][$krom][3] = $this->ruangLaboratorium[mt_rand(0, $RowsDospeng2 - 1)];
-				}
+				$this->data_individu[$i][$krom][3] = $this->id_dosen[mt_rand(0, $RowsDospeng1 - 1)];
+				$this->data_individu[$i][$krom][4] = $this->id_dosen[mt_rand(0, $RowsDospeng2 - 1)];
 			}
 
 			$fitness[$i] = $this->CekFitness($i);
@@ -397,12 +378,12 @@ class Genetika extends CI_Controller
 
 		$individuSolusi = [[]];
 		for ($j = 0; $j < count($this->kode_sp); $j++) {
-			$individuSolusi[$j][0] = intval($this->kode_sp[$this->individu[$indv][$j][0]]);
-			$individuSolusi[$j][1] = intval($this->jam[$this->individu[$indv][$j][1]]);
-			$individuSolusi[$j][2] = intval($this->hari[$this->individu[$indv][$j][2]]);
-			$individuSolusi[$j][3] = intval($this->id_dosen[$this->individu[$indv][$j][3]]);
-			$individuSolusi[$j][4] = intval($this->id_dosen[$this->individu[$indv][$j][4]]);
-			$individuSolusi[$j][5] = intval($this->individu[$indv][$j][5]);
+			$individuSolusi[$j][0] = intval($this->kode_sp[$this->data_individu[$indv][$j][0]]);
+			$individuSolusi[$j][1] = intval($this->jam[$this->data_individu[$indv][$j][1]]);
+			$individuSolusi[$j][2] = intval($this->hari[$this->data_individu[$indv][$j][2]]);
+			$individuSolusi[$j][3] = intval($this->id_dosen[$this->data_individu[$indv][$j][3]]);
+			$individuSolusi[$j][4] = intval($this->id_dosen[$this->data_individu[$indv][$j][4]]);
+			$individuSolusi[$j][5] = intval($this->data_individu[$indv][$j][5]);
 		}
 
 		return $individuSolusi;

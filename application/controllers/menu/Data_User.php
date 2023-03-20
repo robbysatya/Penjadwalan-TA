@@ -109,7 +109,7 @@ class Data_User extends CI_Controller
 
     $data_user =  $this->data_user_model;
     $this->form_validation->set_rules('name', 'Name', 'required|trim');
-    $this->form_validation->set_rules('nim', 'NIM', 'required|trim|is_unique[user.nim]', ['is_unique' => 'This NIM has already registered!']);
+    // $this->form_validation->set_rules('nim', 'NIM', 'required|trim|is_unique[user.nim]', ['is_unique' => 'This NIM has already registered!']);
     // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'This email has already registered!']);
 
     if ($this->form_validation->run() == false) {

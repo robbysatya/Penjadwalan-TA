@@ -14,6 +14,7 @@ class User extends CI_Controller
 		}
 		$this->load->model('user_model');
 		$this->load->model('mahasiswa_model');
+		$this->load->model('jadwal_model');
 		$this->load->library('form_validation');
 	}
 
@@ -148,5 +149,27 @@ class User extends CI_Controller
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Pembatalan Berhasil!</div>');
 		redirect('user/daftar_sidang');
+	}
+
+	public function jadwal_sidang()
+	{
+		$data['title'] = 'Jadwal Seminar Proposal dan Sidang Akhir';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['data_jadwal_user'] = $this->db->get_where('tb_proposal', ['email' => $this->session->userdata('email')])->result_array();
+		$data['data_dosbim_1'] = $this->jadwal_model->getDosBim_1_proposal();
+		$data['data_dosbim_2'] = $this->jadwal_model->getDosBim_2_proposal();
+		$data['data_dospeng_1'] = $this->jadwal_model->getDospeng_1_jadwal();
+		$data['data_dospeng_2'] = $this->jadwal_model->getDospeng_2_jadwal();
+
+		$data['data_jam'] = $this->user_model->getJam();
+		$data['data_hari'] = $this->user_model->getHari();
+		$data['data_tanggal'] = $this->user_model->getTanggal();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('user/jadwal_user', $data);
+		$this->load->view('templates/footer');
 	}
 }
