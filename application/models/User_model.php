@@ -236,33 +236,103 @@ class User_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getJam()
+	public function getJam_proposal()
 	{
-		$this->db->select('*');
-		$this->db->from('tb_jadwal_proposal');
-		$this->db->join('tb_jam', 'tb_jadwal_proposal.jam = tb_jam.kode_jam');
-		$query = $this->db->get();
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_jam`
+		ON `tb_jam`.`kode_jam` = `jp`.`jam`
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
 
-		return $query->result_array();
+		return $this->db->query($query)->result_array();
 	}
 
-	public function getHari()
+	public function getHari_proposal()
 	{
-		$this->db->select('*');
-		$this->db->from('tb_jadwal_proposal');
-		$this->db->join('tb_hari', 'tb_jadwal_proposal.hari = tb_hari.kode_hari');
-		$query = $this->db->get();
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_hari`
+		ON `tb_hari`.`kode_hari` = `jp`.`hari`
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
 
-		return $query->result_array();
+		return $this->db->query($query)->result_array();
 	}
 
-	public function getTanggal()
+	public function getTanggal_proposal()
 	{
-		$this->db->select('*');
-		$this->db->from('tb_jadwal_proposal');
-		$this->db->join('tb_proposal', 'tb_jadwal_proposal.kode_sp = tb_proposal.kode_sp');
-		$query = $this->db->get();
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
 
-		return $query->result_array();
+		return $this->db->query($query)->result_array();
+		// $this->db->select('*');
+		// $this->db->from('tb_jadwal_proposal');
+		// $this->db->join('tb_proposal', 'tb_jadwal_proposal.kode_sp = tb_proposal.kode_sp');
+		// $query = $this->db->get();
+
+		// return $query->result_array();
+	}
+
+	public function getDosBim_1_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p` JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `p`.`dosbim_1` WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
+
+		return $this->db->query($query)->result_array();
+		// $this->db->select('*');
+		// $this->db->from('tb_proposal');
+		// $this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id');
+		// $query = $this->db->get();
+
+		// return $query->result_array();
+	}
+
+	public function getDosBim_2_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p` JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `p`.`dosbim_2` WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
+
+		return $this->db->query($query)->result_array();
+
+		// $this->db->select('*');
+		// $this->db->from('tb_proposal');
+		// $this->db->join('tb_dosen', 'tb_proposal.dosbim_2 = tb_dosen.id');
+		// $query = $this->db->get();
+
+		// return $query->result_array();
+	}
+
+	public function getDospeng_1_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `jp`.`dospeng_1`
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
+
+		return $this->db->query($query)->result_array();
+	}
+
+	public function getDospeng_2_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `jp`.`dospeng_2`
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
+
+		return $this->db->query($query)->result_array();
 	}
 }

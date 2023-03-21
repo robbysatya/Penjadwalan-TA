@@ -157,14 +157,16 @@ class User extends CI_Controller
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
 		$data['data_jadwal_user'] = $this->db->get_where('tb_proposal', ['email' => $this->session->userdata('email')])->result_array();
-		$data['data_dosbim_1'] = $this->jadwal_model->getDosBim_1_proposal();
-		$data['data_dosbim_2'] = $this->jadwal_model->getDosBim_2_proposal();
-		$data['data_dospeng_1'] = $this->jadwal_model->getDospeng_1_jadwal();
-		$data['data_dospeng_2'] = $this->jadwal_model->getDospeng_2_jadwal();
 
-		$data['data_jam'] = $this->user_model->getJam();
-		$data['data_hari'] = $this->user_model->getHari();
-		$data['data_tanggal'] = $this->user_model->getTanggal();
+		$data['data_dosbim_1'] = $this->user_model->getDosBim_1_proposal();
+		$data['data_dosbim_2'] = $this->user_model->getDosBim_2_proposal();
+
+		$data['data_dospeng_1'] = $this->user_model->getDospeng_1_proposal();
+		$data['data_dospeng_2'] = $this->user_model->getDospeng_2_proposal();
+
+		$data['data_jam'] = $this->user_model->getJam_proposal();
+		$data['data_hari'] = $this->user_model->getHari_proposal();
+		$data['data_tanggal'] = $this->user_model->getTanggal_proposal();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

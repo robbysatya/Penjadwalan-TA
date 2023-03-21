@@ -110,13 +110,13 @@
                                     <td><?= $data['nim']; ?></td>
                                     <td><?= $data['name']; ?></td>
                                     <td><?= $data['judul']; ?></td>
-                                    <td><?= $data_dosbim_1[$dju]['name']; ?></td>
-                                    <td><?= $data_dosbim_2[$dju]['name']; ?></td>
-                                    <td><?= $data_dospeng_1[$dju]['name']; ?></td>
-                                    <td><?= $data_dospeng_2[$dju]['name']; ?></td>
-                                    <td><?= $data_jam[$dju]['range_jam']; ?></td>
-                                    <td><?= $data_hari[$dju]['nama_hari']; ?></td>
-                                    <td><?= tanggal_indo($data_tanggal[$dju]['tanggal']); ?></td>
+                                    <td><?= $data_dosbim_1[$djus]['name']; ?></td>
+                                    <td><?= $data_dosbim_2[$djus]['name']; ?></td>
+                                    <td><?= $data_dospeng_1[$djus]['name']; ?></td>
+                                    <td><?= $data_dospeng_2[$djus]['name']; ?></td>
+                                    <td><?= $data_jam[$djus]['range_jam']; ?></td>
+                                    <td><?= $data_hari[$djus]['nama_hari']; ?></td>
+                                    <td><?= tanggal_indo($data_tanggal[$djus]['tanggal']); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
