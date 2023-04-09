@@ -78,7 +78,7 @@ class User_model extends CI_Model
 		$dosbim_2 = $this->input->post('dosbim_2');
 		$date_created = time();
 
-		$config['upload_path'] = './assets/files/';
+		$config['upload_path'] = './assets/files/seminar_proposal/';
 		$config['allowed_types'] = 'pdf';
 		$config['max_size']     = '25600';
 		$this->load->library('upload', $config);
@@ -122,6 +122,7 @@ class User_model extends CI_Model
 		$this->db->insert('tb_proposal');
 
 		$this->db->set('status', 2);
+		$this->db->set('alasan', null);
 		$this->db->where('email', $this->session->userdata('email'));
 		$this->db->update('user');
 	}
@@ -138,9 +139,11 @@ class User_model extends CI_Model
 		$id_jenis_ujian = $this->input->post('id_jenis_ujian');
 		$dosbim_1 = $this->input->post('dosbim_1');
 		$dosbim_2 = $this->input->post('dosbim_2');
+		$dospeng_1 = $this->input->post('dospeng_1');
+		$dospeng_2 = $this->input->post('dospeng_2');
 		$date_created = time();
 
-		$config['upload_path'] = './assets/files/';
+		$config['upload_path'] = './assets/files/sidang_akhir/';
 		$config['allowed_types'] = 'pdf';
 		$config['max_size']     = '25600';
 		$this->load->library('upload', $config);
@@ -170,17 +173,11 @@ class User_model extends CI_Model
 			redirect('user/daftar_sidang');
 		}
 
-		$this->db->set('nim', $nim);
-		$this->db->set('name', $name);
-		$this->db->set('email', $email);
-		$this->db->set('judul', $judul);
-		$this->db->set('keahlian_id', $keahlian_id);
-		$this->db->set('id_jenis_ujian', $id_jenis_ujian);
-		$this->db->set('dosbim_1', $dosbim_1);
-		$this->db->set('dosbim_2', $dosbim_2);
+
 		$this->db->set('date_created', $date_created);
 		$this->db->set('status', 4);
-		$this->db->insert('tb_sidang');
+		$this->db->where('email', $this->session->userdata('email'));
+		$this->db->update('tb_sidang');
 
 		$this->db->set('status', 4);
 		$this->db->set('alasan', null);
@@ -195,9 +192,9 @@ class User_model extends CI_Model
 		$old_file_draft = $data['user']['file_draft'];
 		$old_file_ppt = $data['user']['file_ppt'];
 		$old_file_persetujuan = $data['user']['file_persetujuan'];
-		unlink(FCPATH . 'assets/files/' . $old_file_draft);
-		unlink(FCPATH . 'assets/files/' . $old_file_ppt);
-		unlink(FCPATH . 'assets/files/' . $old_file_persetujuan);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_draft);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_ppt);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_persetujuan);
 
 		$this->db->where('email', $this->session->userdata('email'));
 		$this->db->delete('tb_proposal');
@@ -214,12 +211,12 @@ class User_model extends CI_Model
 		$old_file_draft = $data['user']['file_draft'];
 		$old_file_ppt = $data['user']['file_ppt'];
 		$old_file_persetujuan = $data['user']['file_persetujuan'];
-		unlink(FCPATH . 'assets/files/' . $old_file_draft);
-		unlink(FCPATH . 'assets/files/' . $old_file_ppt);
-		unlink(FCPATH . 'assets/files/' . $old_file_persetujuan);
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_draft);
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_ppt);
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_persetujuan);
 
 		$this->db->where('email', $this->session->userdata('email'));
-		$this->db->delete('tb_sidang');
+		$this->db->update('tb_sidang');
 
 		$this->db->set('status', 3);
 		$this->db->where('email', $this->session->userdata('email'));
@@ -242,8 +239,8 @@ class User_model extends CI_Model
 		FROM `tb_proposal` AS `p`
 		JOIN `tb_jadwal_proposal` AS `jp`
 		ON `jp`.`kode_sp` = `p`.`kode_sp` 
-		JOIN `tb_jam`
-		ON `tb_jam`.`kode_jam` = `jp`.`jam`
+		JOIN `tb_jam_sempro`
+		ON `tb_jam_sempro`.`kode_jam` = `jp`.`jam`
 		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
 
 		return $this->db->query($query)->result_array();
@@ -271,12 +268,17 @@ class User_model extends CI_Model
 		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
 
 		return $this->db->query($query)->result_array();
-		// $this->db->select('*');
-		// $this->db->from('tb_jadwal_proposal');
-		// $this->db->join('tb_proposal', 'tb_jadwal_proposal.kode_sp = tb_proposal.kode_sp');
-		// $query = $this->db->get();
+	}
 
-		// return $query->result_array();
+	public function getLink_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		WHERE `p`.`email` = '" . $_SESSION['email'] . "'";
+
+		return $this->db->query($query)->result_array();
 	}
 
 	public function getDosBim_1_proposal()

@@ -29,6 +29,8 @@ class Data_Mahasiswa_Proposal extends CI_Controller
 		$data['data_ujian'] = $this->mahasiswa_model->getUjian_proposal();
 		$data['data_dosen_1'] = $this->mahasiswa_model->getDosBim_1_proposal();
 		$data['data_dosen_2'] = $this->mahasiswa_model->getDosBim_2_proposal();
+		$data['data_dospeng_1'] = $this->mahasiswa_model->getDospeng_1_proposal();
+		$data['data_dospeng_2'] = $this->mahasiswa_model->getDospeng_2_proposal();
 		$data['list_data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
 		$data['list_data_ujian'] = $this->db->get('tb_jenis_ujian')->result_array();
 		$data['list_data_dosen'] = $this->db->get('tb_dosen')->result_array();
@@ -40,7 +42,7 @@ class Data_Mahasiswa_Proposal extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function terimaSidang()
+	public function terimaSempro()
 	{
 		$nim = $this->input->post('nim');
 
@@ -52,21 +54,22 @@ class Data_Mahasiswa_Proposal extends CI_Controller
 		$this->db->where('nim', $nim);
 		$this->db->update('user');
 
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menerima!</div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menerima Seminar Proposal!</div>');
 		redirect('menu/data_mahasiswa_proposal');
 	}
 
-	public function tolakSidang()
+	public function tolakSempro()
 	{
 		$nim = $this->input->post('nim');
 		$this->mahasiswa_model->tolak_sempro($nim);
 
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditolak!</div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menolak Seminar Proposal!</div>');
 		redirect('menu/data_mahasiswa_proposal');
 	}
 
 	public function lanjutSidang()
 	{
+		$kode_sp = $this->input->post('kode_sp');
 		$nim = $this->input->post('nim');
 
 		$data['user'] = $this->db->get_where('user', ['nim' => $nim]);
@@ -78,6 +81,10 @@ class Data_Mahasiswa_Proposal extends CI_Controller
 		$this->db->set('status', 3);
 		$this->db->where('nim', $nim);
 		$this->db->update('user');
+
+
+		$this->mahasiswa_model->lanjutSidang();
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil menerima untuk melanjutkan Sidang Akhir!</div>');
 
 		redirect('menu/data_mahasiswa_proposal');
 	}

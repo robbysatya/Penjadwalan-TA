@@ -30,6 +30,7 @@
                                 <th>Jam</th>
                                 <th>Hari</th>
                                 <th>Tanggal</th>
+                                <th>Link Zoom</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,6 +66,7 @@
                                     <td><?= $data_jam[$dju]['range_jam']; ?></td>
                                     <td><?= $data_hari[$dju]['nama_hari']; ?></td>
                                     <td><?= tanggal_indo($data_tanggal[$dju]['tanggal']); ?></td>
+                                    <td><a class="btn btn-primary" href="<?= $data_link[$dju]['link']; ?>" target="_blank"><i class="fa far fa-link"></i> Buka Zoom</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -102,6 +104,7 @@
                                 <th>Jam</th>
                                 <th>Hari</th>
                                 <th>Tanggal</th>
+                                <th>Link Zoom</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,6 +120,7 @@
                                     <td><?= $data_jam[$djus]['range_jam']; ?></td>
                                     <td><?= $data_hari[$djus]['nama_hari']; ?></td>
                                     <td><?= tanggal_indo($data_tanggal[$djus]['tanggal']); ?></td>
+                                    <td><a class="btn btn-primary" href="<?= $data_link[$djus]['link']; ?>" target="_blank"><i class="fa far fa-link"></i> Buka Zoom</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

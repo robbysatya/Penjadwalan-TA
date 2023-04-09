@@ -19,7 +19,9 @@
               </p>
               <p style="color: red; font-size: 14px">*Pastikan anda sudah memiliki File Draft TA, PPT dan File Persetujuan, lalu mengupload dalam format PDF dan Maksimal File 25 Mb</p>
               <?php if ($user['status'] == 0) { ?>
-                <b><?= $user['alasan']; ?></b>
+
+              <?php } else if ($user['status'] == 0 && $user['alasan'] != NULL) { ?>
+                Pendaftaran Anda ditolak, karena : <b><?= $user['alasan']; ?></b><br>
                 <!-- MENUNGGU PERSETUJUAN SEMPRO -->
               <?php } else if ($user['status'] == 2) { ?>
                 Anda tercatat pernah mendaftar <b>Seminar Proposal</b>. Silahkan tunggu pendaftaran anda distujui.
@@ -30,6 +32,10 @@
 
                 <!-- DAFTAR SIDANG -->
               <?php } else if ($user['status'] == 3) { ?>
+                Anda tercatat pernah mendaftar <b>Seminar Proposal</b>. Pendaftaran untuk <b>Sidang Akhir</b> telah disetujui untuk mendaftar, silahkan mendaftar.
+
+              <?php } else if ($user['status'] == 3 && $user['alasan'] != NULL) { ?>
+                Pendaftaran Anda ditolak, karena : <b><?= $user['alasan']; ?></b><br>
                 Anda tercatat pernah mendaftar <b>Seminar Proposal</b>. Pendaftaran untuk <b>Sidang Akhir</b> telah disetujui untuk mendaftar, silahkan mendaftar.
 
                 <!-- MENUNGGU PERSETUJUAN SIDANG -->
@@ -84,8 +90,7 @@
         <?php } ?>
         </div>
       </div>
-    </div>
-    <!-- /.container-fluid -->
+      <!-- /.container-fluid -->
 
     </div>
     <!-- End of Main Content -->
@@ -150,7 +155,7 @@
               <div class="mb-3">
                 <label class="col-form-label">File Draft TA</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_draft" name="file_draft" accept=" application/pdf">
+                  <input type="file" class="custom-file-input" id="file_draft" name="file_draft" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>
@@ -158,7 +163,7 @@
               <div class="mb-3">
                 <label class="col-form-label">File PPT</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_ppt" name="file_ppt" accept=" application/pdf">
+                  <input type="file" class="custom-file-input" id="file_ppt" name="file_ppt" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>
@@ -166,13 +171,13 @@
               <div class="mb-3">
                 <label class="col-form-label">File Persetujuan</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_persetujuan" name="file_persetujuan" accept=" application/pdf">
+                  <input type="file" class="custom-file-input" id="file_persetujuan" name="file_persetujuan" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>
 
               <div class="d-flex flex-row justify-content-end mt-auto pt-3 pb-3">
-                <button type="submit" class="btn btn-primary">Daftar Sidang <i class="fas fa-fw fa-arrow-right"></i></button>
+                <button type="submit" class="btn btn-primary">Daftar Sempro <i class="fas fa-fw fa-arrow-right"></i></button>
               </div>
             </form>
           </div>
@@ -197,13 +202,13 @@
               <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= $user['email']; ?>" hidden>
               <div class="form-group">
                 <label for="judul" class="col-form-label">Judul</label>
-                <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul" value="<?= $data_proposal['judul'] ?>" style="pointer-events: none;">
+                <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul" value="<?= $data_sidang['judul'] ?>" style="pointer-events: none;">
               </div>
               <div class="mb-3">
                 <label class="col-form-label">Kelompok Keahlian</label>
                 <select class="custom-select" id="keahlian_id" name="keahlian_id" style="pointer-events: none;">
                   <?php foreach ($data_keahlian as $dk) : ?>
-                    <option selected value="<?= $data_proposal['keahlian_id'] ?>"><?= $dk['keahlian']; ?></option>
+                    <option selected value="<?= $data_sidang['keahlian_id'] ?>"><?= $dk['keahlian']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -218,8 +223,8 @@
               <div class="mb-3">
                 <label for="dosbim_1" class="col-form-label">Dosen Pembimbing 1</label>
                 <select class="custom-select" id="dosbim_1" name="dosbim_1" style="pointer-events: none;">
-                  <?php foreach ($data_dosen_1_proposal as $dd_1) : ?>
-                    <option value="<?= $data_proposal['dosbim_1'] ?>"><?= $dd_1['name']; ?></option>
+                  <?php foreach ($data_dosen_1_sidang as $dd_1) : ?>
+                    <option value="<?= $data_sidang['dosbim_1'] ?>"><?= $dd_1['name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -227,8 +232,26 @@
               <div class="mb-3">
                 <label class="col-form-label">Dosen Pembimbing 2</label>
                 <select class="custom-select" id="dosbim_2" name="dosbim_2" style="pointer-events: none;">
-                  <?php foreach ($data_dosen_2_proposal as $dd_2) : ?>
-                    <option value="<?= $data_proposal['dosbim_2'] ?>"><?= $dd_2['name']; ?></option>
+                  <?php foreach ($data_dosen_2_sidang as $dd_2) : ?>
+                    <option value="<?= $data_sidang['dosbim_2'] ?>"><?= $dd_2['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="col-form-label">Dosen Penguji 1</label>
+                <select class="custom-select" id="dospeng_1" name="dospeng_2" style="pointer-events: none;">
+                  <?php foreach ($data_dospeng_1_sidang as $dd_1) : ?>
+                    <option value="<?= $data_sidang['dospeng_1'] ?>"><?= $dd_1['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="col-form-label">Dosen Penguji 2</label>
+                <select class="custom-select" id="dospeng_2" name="dospeng_2" style="pointer-events: none;">
+                  <?php foreach ($data_dospeng_2_sidang as $dd_2) : ?>
+                    <option value="<?= $data_sidang['dospeng_2'] ?>"><?= $dd_2['name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -236,7 +259,7 @@
               <div class="mb-3">
                 <label class="col-form-label">File Draft TA</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_draft" name="file_draft">
+                  <input type="file" class="custom-file-input" id="file_draft" name="file_draft" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>
@@ -244,7 +267,7 @@
               <div class="mb-3">
                 <label class="col-form-label">File PPT</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_ppt" name="file_ppt">
+                  <input type="file" class="custom-file-input" id="file_ppt" name="file_ppt" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>
@@ -252,7 +275,7 @@
               <div class="mb-3">
                 <label class="col-form-label">File Persetujuan</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="file_persetujuan" name="file_persetujuan">
+                  <input type="file" class="custom-file-input" id="file_persetujuan" name="file_persetujuan" accept="application/pdf">
                   <label class="custom-file-label">Choose file</label>
                 </div>
               </div>

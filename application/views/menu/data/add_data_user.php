@@ -8,7 +8,7 @@
       <?= $this->session->flashdata('message');  ?>
 
       <!-- DataTales Example -->
-      <div class="card shadow mb-4">
+      <div class="card mb-4">
         <div class="card-header py-3">
           <a href="<?= base_url('menu/data_user') ?>"><i class="fas fa-fw fa-arrow-left"></i>
             Kembali</a>
@@ -19,32 +19,27 @@
               <div class="form-group">
                 <div class="mb-3">
                   <label for="">NIM</label>
-                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa"
-                    value="<?= set_value('nim'); ?>">
+                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa" value="<?= set_value('nim'); ?>">
                   <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Nama Lengkap</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa"
-                    value="<?= set_value('name'); ?>">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa" value="<?= set_value('name'); ?>">
                   <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Mahasiswa"
-                    value="<?= set_value('email'); ?>">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Mahasiswa" value="<?= set_value('email'); ?>">
                   <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Password</label>
-                  <input type="password" class="form-control" id="password1" name="password1"
-                    placeholder="************">
+                  <input type="password" class="form-control" id="password1" name="password1" placeholder="************">
                   <?= form_error('password1', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Repeat Password</label>
-                  <input type="password" class="form-control" id="password2" name="password2"
-                    placeholder="************">
+                  <input type="password" class="form-control" id="password2" name="password2" placeholder="************">
                 </div>
                 <div class="mb-3">
                   <label for="">Role</label>

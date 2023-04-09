@@ -104,7 +104,7 @@ class Mahasiswa_model extends CI_Model
 	// GET DATA SEMPRO
 	public function getDataAll_sempro()
 	{
-		$query = "SELECT `tb_proposal`.* FROM `tb_proposal` WHERE `status` = 2 OR `status` = 1 ORDER BY `date_created` DESC";
+		$query = "SELECT `tb_proposal`.* FROM `tb_proposal` WHERE  `status` = 2 OR `status` = 1";
 
 		return $this->db->query($query)->result_array();
 	}
@@ -123,7 +123,7 @@ class Mahasiswa_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tb_proposal');
-		$this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id');
+		$this->db->join('tb_dosen', 'tb_dosen.id = tb_proposal.dosbim_1 ');
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -160,14 +160,26 @@ class Mahasiswa_model extends CI_Model
 		return $query->result_array();
 	}
 
-	// public function getKategori_Sidang($sidang)
-	// {
-	// 	$this->db->select('*');
-	// 	$this->db->from('tb_sidang');
-	// 	$query = $this->db->get('tb_sidang', $sidang);
+	// GET DATA DOSPENG SIDANG
+	public function getDospeng_1_sidang()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_sidang');
+		$this->db->join('tb_dosen', 'tb_sidang.dospeng_1 = tb_dosen.id');
+		$query = $this->db->get();
 
-	// 	return $query->result_array();
-	// }
+		return $query->result_array();
+	}
+
+	public function getDospeng_2_sidang()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_sidang');
+		$this->db->join('tb_dosen', 'tb_sidang.dospeng_2 = tb_dosen.id');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
 
 	function get_otomatis($nim)
 	{
@@ -178,44 +190,44 @@ class Mahasiswa_model extends CI_Model
 	}
 
 	// FUNGSI MODEL EDIT/UPDATE
-	public function update($id = null)
-	{
+	// public function update($id = null)
+	// {
 
-		$data['user'] = $this->db->get_where('user', ['id' => $id]);
+	// 	$data['user'] = $this->db->get_where('user', ['id' => $id]);
 
-		$post = $this->input->post();
-		$this->id = $post['id'];
-		$this->nim = $post['nim'];
-		$this->name = $post['name'];
-		$this->judul = $post['judul'];
-		$this->topik = $post['topik'];
-		$this->keahlian_id = $post['keahlian_id'];
-		$this->id_jenis_ujian = $post['id_jenis_ujian'];
-		$this->dosbim_1 = $post['dosbim_1'];
-		$this->dosbim_2 = $post['dosbim_2'];
-		$this->file_draft = $_FILES['file_draft'];
-		$this->file_ppt = $_FILES['file_ppt'];
-		$this->file_persetujuan = $_FILES['file_persetujuan'];
+	// 	$post = $this->input->post();
+	// 	$this->id = $post['id'];
+	// 	$this->nim = $post['nim'];
+	// 	$this->name = $post['name'];
+	// 	$this->judul = $post['judul'];
+	// 	$this->topik = $post['topik'];
+	// 	$this->keahlian_id = $post['keahlian_id'];
+	// 	$this->id_jenis_ujian = $post['id_jenis_ujian'];
+	// 	$this->dosbim_1 = $post['dosbim_1'];
+	// 	$this->dosbim_2 = $post['dosbim_2'];
+	// 	$this->file_draft = $_FILES['file_draft'];
+	// 	$this->file_ppt = $_FILES['file_ppt'];
+	// 	$this->file_persetujuan = $_FILES['file_persetujuan'];
 
-		$config['upload_path'] = './assets/files/';
-		$config['allowed_types'] = 'pdf';
-		$config['max_size']     = '5120';
+	// 	$config['upload_path'] = './assets/files/';
+	// 	$config['allowed_types'] = 'pdf';
+	// 	$config['max_size']     = '5120';
 
-		$this->load->library('upload', $config);
+	// 	$this->load->library('upload', $config);
 
-		$this->upload->do_upload('file_draft');
-		$this->upload->do_upload('file_ppt');
-		$this->upload->do_upload('file_persetujuan');
-		$old_file = $this->db->query("SELECT file_draft, file_ppt, file_persetujuan FROM user WHERE id='$id'")->row();
-		unlink(FCPATH . 'assets/files/' . $old_file);
+	// 	$this->upload->do_upload('file_draft');
+	// 	$this->upload->do_upload('file_ppt');
+	// 	$this->upload->do_upload('file_persetujuan');
+	// 	$old_file = $this->db->query("SELECT file_draft, file_ppt, file_persetujuan FROM user WHERE id='$id'")->row();
+	// 	unlink(FCPATH . 'assets/files/' . $old_file);
 
-		$new_file = $this->upload->data('file_name');
-		$this->db->set('file_draft', $new_file);
-		$this->db->set('file_ppt', $new_file);
-		$this->db->set('file_persetujuan', $new_file);
+	// 	$new_file = $this->upload->data('file_name');
+	// 	$this->db->set('file_draft', $new_file);
+	// 	$this->db->set('file_ppt', $new_file);
+	// 	$this->db->set('file_persetujuan', $new_file);
 
-		return $this->db->update('user', $this, array('id' => $post['id']));
-	}
+	// 	return $this->db->update('user', $this, array('id' => $post['id']));
+	// }
 
 	// FUNGSI TOLAK DAFTAR SEMPRO
 	public function tolak_sempro($nim = null)
@@ -226,9 +238,9 @@ class Mahasiswa_model extends CI_Model
 		$old_file_draft = $data['user']['file_draft'];
 		$old_file_ppt = $data['user']['file_ppt'];
 		$old_file_persetujuan = $data['user']['file_persetujuan'];
-		unlink(FCPATH . 'assets/files/' . $old_file_draft);
-		unlink(FCPATH . 'assets/files/' . $old_file_ppt);
-		unlink(FCPATH . 'assets/files/' . $old_file_persetujuan);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_draft);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_ppt);
+		unlink(FCPATH . 'assets/files/seminar_proposal/' . $old_file_persetujuan);
 
 		$this->db->set('status', 0);
 		$this->db->set('alasan', $alasan);
@@ -236,6 +248,75 @@ class Mahasiswa_model extends CI_Model
 		$this->db->update('user');
 
 		$this->db->where('nim', $nim);
+		$this->db->set('file_draft', '');
+		$this->db->set('file_ppt', '');
+		$this->db->set('file_persetujuan', '');
 		$this->db->delete('tb_proposal');
+	}
+
+	// FUNGSI TOLAK DAFTAR SIDANG
+	public function tolak_sidang($nim = null)
+	{
+		$data['user'] = $this->db->get_where('tb_sidang', ['nim' => $nim])->row_array();
+		$alasan = $this->input->post('alasan');
+
+		$old_file_draft = $data['user']['file_draft'];
+		$old_file_ppt = $data['user']['file_ppt'];
+		$old_file_persetujuan = $data['user']['file_persetujuan'];
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_draft);
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_ppt);
+		unlink(FCPATH . 'assets/files/sidang_akhir/' . $old_file_persetujuan);
+
+		$this->db->set('status', 3);
+		$this->db->set('file_draft', '');
+		$this->db->set('file_ppt', '');
+		$this->db->set('file_persetujuan', '');
+		$this->db->where('nim', $nim);
+		$this->db->update('tb_sidang');
+
+		$this->db->set('status', 3);
+		$this->db->set('alasan', $alasan);
+		$this->db->where('nim', $nim);
+		$this->db->update('user');
+	}
+
+	public function getDospeng_1_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `jp`.`dospeng_1`";
+
+		return $this->db->query($query)->result_array();
+	}
+	public function getDospeng_2_proposal()
+	{
+		$query = "SELECT *
+		FROM `tb_proposal` AS `p`
+		JOIN `tb_jadwal_proposal` AS `jp`
+		ON `jp`.`kode_sp` = `p`.`kode_sp` 
+		JOIN `tb_dosen`
+		ON `tb_dosen`.`id` = `jp`.`dospeng_2`";
+
+		return $this->db->query($query)->result_array();
+	}
+
+	// FUNGSI LANJUT SIDANG
+	public function lanjutSidang()
+	{
+		$post = $this->input->post();
+		$this->nim = $post['nim'];
+		$this->name = $post['name'];
+		$this->judul = $post['judul'];
+		$this->keahlian_id = $post['keahlian_id'];
+		$this->id_jenis_ujian = $post['id_jenis_ujian'];
+		$this->dosbim_1 = $post['dosbim_1'];
+		$this->dosbim_2 = $post['dosbim_2'];
+		$this->dospeng_1 = $post['dospeng_1'];
+		$this->dospeng_2 = $post['dospeng_2'];
+
+		return $this->db->insert('tb_sidang', $post);
 	}
 }

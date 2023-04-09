@@ -69,7 +69,7 @@
        <div id="dataPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
          <div class="bg-white py-2 collapse-inner rounded">
            <a class="collapse-item" href="<?= base_url('menu/data_dosen') ?>">Data Dosen</a>
-           <a class="collapse-item" href="<?= base_url('menu/data_jadwal_dosen'); ?>">Data Jadwal Dosen</a>
+           <!-- <a class="collapse-item" href="<?= base_url('menu/data_jadwal_dosen'); ?>">Data Jadwal Dosen</a> -->
            <div class="collapse-divider"></div>
          </div>
        </div>
@@ -130,7 +130,7 @@
        <div id="jadwalPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
          <div class="bg-white py-2 collapse-inner rounded">
            <a class="collapse-item" href="<?= base_url('jadwal/jadwal_proposal') ?>">Jadwal Sempro</a>
-           <a class="collapse-item" href="<?= base_url('menu/jadwal_sidang') ?>">Jadwal Sidang</a>
+           <a class="collapse-item" href="<?= base_url('jadwal/jadwal_sidang') ?>">Jadwal Sidang</a>
            <div class="collapse-divider"></div>
          </div>
        </div>

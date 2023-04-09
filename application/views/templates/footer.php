@@ -20,8 +20,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -44,7 +43,7 @@
     <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		<!-- Core plugin JavaScript-->
+    <!-- Core plugin JavaScript-->
     <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugins -->
@@ -66,23 +65,23 @@
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
     <script type="text/javascript">
-			$('.custom-file-input').on('change', function() {
-				let fileName = $(this).val().split('\\').pop();
-				$(this).next('.custom-file-label').addClass("selected").html(fileName);
-			});
+      $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+      });
 
-			$(function() {
-				$('.navbar-nav .nav-item a').filter(function() {
-					return this.href == location.href
-				}).parent().addClass('active').siblings().removeClass('active')
-				$('.navbar-nav .nav-item a').click(function() {
-					$(this).parent().addClass('active').siblings().removeClass('active')
-				})
-			});
+      $(function() {
+        $('.navbar-nav .nav-item a').filter(function() {
+          return this.href == location.href
+        }).parent().addClass('active').siblings().removeClass('active')
+        $('.navbar-nav .nav-item a').click(function() {
+          $(this).parent().addClass('active').siblings().removeClass('active')
+        })
+      });
 
-			function redirect(url){
-    		location.href = url;
-    	}
+      function redirect(url) {
+        location.href = url;
+      }
     </script>
 
     </body>

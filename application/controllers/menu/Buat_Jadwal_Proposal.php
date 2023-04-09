@@ -17,6 +17,7 @@ class Buat_Jadwal_Proposal extends CI_Controller
 	public $RowsDosbim1 = array();
 	public $RowsDosbim2 = array();
 
+	public $data0 = array();
 	public $data1 = array();
 	public $data2 = array();
 	public $data3 = array();
@@ -49,10 +50,10 @@ class Buat_Jadwal_Proposal extends CI_Controller
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
 		$data['data_jadwal'] = $this->jadwal_model->getDataAcakProposal();
-		$data['data_dosen'] = $this->dosen_model->getNamaDosen();
+		// $data['data_dosen'] = $this->dosen_model->getNamaDosen();
 		$data['data_list_dosen'] = $this->dosen_model->getDosen();
 		// $data['data_hari'] = $this->db->get('tb_hari')->result_array();
-		// $data['data_jam'] = $this->db->get('tb_jam')->result_array();
+		// $data['data_jam'] = $this->db->get('tb_jam_sempro')->result_array();
 
 		$data['data_dospeng'] = $this->db->get('data_acak_sp')->result_array();
 		$data['data_list_dospeng_1'] = $this->jadwal_model->getNamaDospeng_1();
@@ -91,73 +92,85 @@ class Buat_Jadwal_Proposal extends CI_Controller
 	{
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$this->jadwal_model->edit_jadwal();
+		$this->jadwal_model->edit_jadwal_sempro();
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Jadwal Berhasil Diubah!</div>');
 		redirect('menu/buat_jadwal_proposal');
 	}
 
+	// KEAJAIBAN DIMULAI, GENERATE JADWAL DENGAN ALGORITMA GENETIKA
 	public function Genetika()
 	{
+		$cek = ($this->db->query("SELECT * FROM tb_proposal WHERE status = 1"));
+		// var_dump($cek->num_rows());
+		// die;
+		if ($cek->num_rows() < 2) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data pendaftar Sempro yang diterima kurang dari aturan untuk generate jadwal minimal 2 data pendaftar!</div>');
+			redirect('menu/buat_jadwal_proposal');
+		} else {
+			$populasi = $this->input->post('populasi');
+			$crossOver = $this->input->post('crossover');
+			$mutasi = $this->input->post('mutasi');
+			$jumlah_generasi = $this->input->post('jumlah_generasi');
 
-		$populasi = $this->input->post('populasi');
-		$crossOver = $this->input->post('crossover');
-		$mutasi = $this->input->post('mutasi');
-		$jumlah_generasi = $this->input->post('jumlah_generasi');
+			$data['populasi'] = $populasi;
+			$data['crossover'] = $crossOver;
+			$data['mutasi'] = $mutasi;
+			$data['jumlah_generasi'] = $jumlah_generasi;
 
-		$data['populasi'] = $populasi;
-		$data['crossover'] = $crossOver;
-		$data['mutasi'] = $mutasi;
-		$data['jumlah_generasi'] = $jumlah_generasi;
-
-		$this->AmbilData($populasi);
-		$this->Inisialisasi($populasi);
-
-
-		$found = false;
-
-
-		for ($i = 0; $i < $jumlah_generasi; $i++) {
-			$fitness = $this->HitungFitness($populasi);
-
-			// if ($i == 10) {
-			// 	var_dump($fitness);
-			// 	exit();
-			// }
-
-			$this->Seleksi($fitness, $populasi);
-			$this->StartCrossOver($populasi, $crossOver);
-
-			$fitnessAfterMutation = $this->Mutasi($populasi, $mutasi);
-
-			for ($j = 0; $j < count($fitnessAfterMutation); $j++) {
-				//test here
-				// var_dump($fitnessAfterMutation[$j]);
-				// exit();
-				if ($fitnessAfterMutation[$j] < 1) {
-
-					$this->db->query("TRUNCATE TABLE data_acak_sp");
-
-					$data_hasil = array(array(array(array(array()))));
-					$data_hasil = $this->GetIndividu($j);
+			$this->AmbilData($populasi);
+			$this->Inisialisasi($populasi);
 
 
-					for ($k = 0; $k < count($data_hasil); $k++) {
+			$found = false;
 
-						$kode_sp = intval($data_hasil[$k][0]);
-						$hari = intval($data_hasil[$k][1]);
-						$jam = intval($data_hasil[$k][2]);
-						$dospeng_1 = intval($data_hasil[$k][3]);
-						$dospeng_2 = intval($data_hasil[$k][4]);
-						$this->db->query("INSERT INTO data_acak_sp(kode_sp,hari,jam,dospeng_1,dospeng_2) " .
-							"VALUES($kode_sp,$hari,$jam,$dospeng_1,$dospeng_2)");
+
+			for ($i = 0; $i < $jumlah_generasi; $i++) {
+				$fitness = $this->HitungFitness($populasi);
+
+				// if ($i == 10) {
+				// 	var_dump($fitness);
+				// 	exit();
+				// }
+
+				$this->Seleksi($fitness, $populasi);
+				$this->StartCrossOver($populasi, $crossOver);
+
+				$fitnessAfterMutation = $this->Mutasi($populasi, $mutasi);
+
+				for ($j = 0; $j < count($fitnessAfterMutation); $j++) {
+					//test here
+					// var_dump($fitnessAfterMutation[$j]);
+					// exit();
+					if ($fitnessAfterMutation[$j] < 1) {
+
+						$this->db->query("TRUNCATE TABLE data_acak_sp");
+
+						$data_hasil = array(array(array(array(array()))));
+						$data_hasil = $this->GetIndividu($j);
+
+
+						for ($k = 0; $k < count($data_hasil); $k++) {
+
+							$kode_sp = intval($data_hasil[$k][0]);
+							$hari = intval($data_hasil[$k][1]);
+							$jam = intval($data_hasil[$k][2]);
+							$dospeng_1 = intval($data_hasil[$k][3]);
+							$dospeng_2 = intval($data_hasil[$k][4]);
+							$this->db->query("INSERT INTO data_acak_sp(kode_sp,hari,jam,dospeng_1,dospeng_2) " .
+								"VALUES($kode_sp,$hari,$jam,$dospeng_1,$dospeng_2)");
+						}
+
+						echo '<META HTTP-EQUIV="Refresh" Content="0; URL=' . base_url() . 'menu/buat_jadwal_proposal?fit=' . $fitnessAfterMutation[$j] . '">';
+						//var_dump($jadwal_kuliah);
+						//exit();
+
+						$found = true;
 					}
 
-					echo '<META HTTP-EQUIV="Refresh" Content="0; URL=' . base_url() . 'menu/buat_jadwal_proposal?fit=' . $fitnessAfterMutation[$j] . '">';
-					//var_dump($jadwal_kuliah);
-					//exit();
-
-					$found = true;
+					if ($found) {
+						break;
+					}
 				}
 
 				if ($found) {
@@ -165,18 +178,15 @@ class Buat_Jadwal_Proposal extends CI_Controller
 				}
 			}
 
-			if ($found) {
-				break;
+			if (!$found) {
+				$data['msg'] = 'Tidak Ditemukan Solusi Optimal';
 			}
-		}
-
-		if (!$found) {
-			$data['msg'] = 'Tidak Ditemukan Solusi Optimal';
 		}
 	}
 
 	public function AmbilData()
 	{
+		// Ambil Data Seminar
 		$dataSempro = $this->jadwal_model->getDataSempro();
 		$no = 0;
 		foreach ($dataSempro->result() as $data) {
@@ -186,8 +196,9 @@ class Buat_Jadwal_Proposal extends CI_Controller
 			$no++;
 		}
 
+
 		// Ambil Data Hari
-		$dataHari = $this->jadwal_model->getJadwaHariDosen();
+		$dataHari = $this->jadwal_model->getJadwalHariSempro();
 		$no = 0;
 		foreach ($dataHari->result() as $data) {
 			$this->hari[$no] = intval($data->kode_hari);
@@ -195,7 +206,7 @@ class Buat_Jadwal_Proposal extends CI_Controller
 		}
 
 		// Ambil Data Jam
-		$dataJam = $this->jadwal_model->getJadwalJamDosen();
+		$dataJam = $this->jadwal_model->getJadwalJamSempro();
 		$no = 0;
 		foreach ($dataJam->result() as $data) {
 			$this->jam[$no] = intval($data->kode_jam);
@@ -217,10 +228,20 @@ class Buat_Jadwal_Proposal extends CI_Controller
 			$this->dospeng_2[$no] = intval($data->id);
 			$no++;
 		}
+
+		// Ambil Data Dosbim
+		// $dataDosbim = $this->jadwal_model->getDosbim();
+		// $no = 0;
+		// foreach ($dataDosbim->result() as $data) {
+		// 	$this->dosbim_1[$no] = intval($data->dosbim_1);
+		// 	$this->dosbim_2[$no] = intval($data->dosbim_2);
+		// 	$no++;
+		// }
 	}
 
 
 	// INISIALISASI
+
 	public function Inisialisasi($populasi)
 	{
 		$this->populasi = $populasi;
@@ -234,13 +255,26 @@ class Buat_Jadwal_Proposal extends CI_Controller
 		for ($i = 0; $i < $this->populasi; $i++) {
 			for ($j = 0; $j < $RowsProposal; $j++) {
 				$this->data_individu[$i][$j][0] = $j;
-				$this->data_individu[$i][$j][5] = $j;
-				$this->data_individu[$i][$j][6] = $j;
+				// $this->data_individu[$i][$j][5];
+				// $this->data_individu[$i][$j][6];
+				// $this->data0 = mt_rand(0, $RowsDosbim1 - $RowsProposal + $RowsDospeng1);
+				// $this->data1 = mt_rand(0, $RowsDosbim2 - $RowsProposal + $RowsDospeng1);
 				$this->data2 = mt_rand(0, $RowsHari - 1);
 				$this->data3 = mt_rand(0, $RowsJam - 1);
 				$this->data4 = mt_rand(0, $RowsDospeng1 - 1);
 				$this->data5 = mt_rand(0, $RowsDospeng2 - 1);
 
+				// if ($this->data0 == 0) {
+				// 	$this->data_individu[$i][$j][5] = $this->data0 + 1;
+				// } else {
+				// 	$this->data_individu[$i][$j][5] = $this->data0;
+				// }
+
+				// if ($this->data1 == 0) {
+				// 	$this->data_individu[$i][$j][6] = $this->data1 + 1;
+				// } else {
+				// 	$this->data_individu[$i][$j][6] = $this->data1;
+				// }
 
 				if ($this->data2 == 0) {
 					$this->data_individu[$i][$j][1] = $this->data2 + 1;
@@ -265,25 +299,6 @@ class Buat_Jadwal_Proposal extends CI_Controller
 				} else {
 					$this->data_individu[$i][$j][4] = $this->data5;
 				}
-
-				// $a = $this->data_individu[$i][0];
-				// $bb = $this->data_individu[$i][$j][1];
-				// $cc = $this->data_individu[$i][$j][2];
-
-				// // $d = $this->data_individu[$i][3];
-				// // $e = $this->data_individu[$i][4];
-
-				// if ($bb >= $RowsHari) {
-				// 	$this->data_individu[$i][$j][1] = mt_rand(1, $RowsHari);
-				// } else {
-				// 	$this->data_individu[$i][$j][1];
-				// }
-
-				// if ($cc >= $RowsJam) {
-				// 	$this->data_individu[$i][$j][2] = mt_rand(1, $RowsJam);
-				// } else {
-				// 	$this->data_individu[$i][$j][2];
-				// }
 			}
 		}
 	}
@@ -291,74 +306,74 @@ class Buat_Jadwal_Proposal extends CI_Controller
 	private function CekFitness($indv)
 	{
 
-		// $penalty = 0;
-		$penalty_jam = 0;
-		$penalty_hari = 0;
-		$penalty_dospeng = 0;
+		$penalty = 0;
+		// $penalty_jam = 0;
+		// $penalty_hari = 0;
+		// $penalty_dospeng = 0;
 
 		$RowsProposal =  count($this->kode_sp);
+		$RowsDosbim1 =  $this->dosbim_1;
+		$RowsDosbim2 =  $this->dosbim_2;
 
 		for ($i = 0; $i < $RowsProposal; $i++) {
 			$hari_a = intval($this->data_individu[$indv][$i][1]);
 			$jam_a = intval($this->data_individu[$indv][$i][2]);
 			$dospeng_a = intval($this->data_individu[$indv][$i][3]);
-			$dosbim_a = intval($this->data_individu[$i][5]);
+			$dosbim_a =  $RowsDosbim1;
 
 			for ($j = 0; $j < $RowsProposal; $j++) {
 				$hari_b = intval($this->data_individu[$indv][$j][1]);
 				$jam_b = intval($this->data_individu[$indv][$j][2]);
 				$dospeng_b = intval($this->data_individu[$indv][$j][4]);
-				$dosbim_b = intval($this->data_individu[$j][6]);
+				$dosbim_b = $RowsDosbim2;
 
 				if ($i == $j) {
 					continue;
 				}
 				if ($jam_a == $jam_b) {
-					$penalty_jam += 1;
+					$penalty += 1;
 				}
 				if ($hari_a == $hari_b) {
-					$penalty_hari += 1;
+					$penalty += 1;
 				}
 				if ($hari_a == 5 && $jam_a == 3) {
-					$penalty_jam += 2;
+					$penalty += 1;
 				}
 				if ($hari_b == 5 && $jam_b == 3) {
-					$penalty_jam += 2;
+					$penalty += 1;
 				}
 				if ($hari_b == 5 && $jam_a == 3) {
-					$penalty_jam += 2;
+					$penalty += 1;
 				}
 				if ($hari_a == 5 && $jam_a == 4) {
-					$penalty_jam += 1;
+					$penalty += 1;
 				}
 				if ($hari_a == 5 && $jam_b == 4) {
-					$penalty_jam += 1;
+					$penalty += 1;
 				}
 				if ($hari_b == 5 && $jam_b == 4) {
-					$penalty_jam += 1;
+					$penalty += 1;
 				}
-
 				if ($dospeng_a == $dospeng_b) {
-					$penalty_dospeng += 1;
+					$penalty += 1;
 				}
 				if ($dosbim_a == $dospeng_a) {
-					$penalty_dospeng += 1;
+					$penalty += 1;
 				}
 				if ($dosbim_b == $dospeng_a) {
-					$penalty_dospeng += 1;
+					$penalty += 1;
 				}
 				if ($dosbim_a == $dospeng_b) {
-					$penalty_dospeng += 1;
+					$penalty += 1;
 				}
 				if ($dosbim_b == $dospeng_b) {
-					$penalty_dospeng += 1;
+					$penalty += 1;
 				}
-
 				// end loop j
 			}
 			// end loop k
 		}
-		$fitness = floatval(1 / (1 + $penalty_dospeng + $penalty_jam + $penalty_hari));
+		$fitness = floatval(1 / (1 + $penalty));
 		return $fitness;
 	}
 
@@ -520,7 +535,7 @@ class Buat_Jadwal_Proposal extends CI_Controller
 				//proses penggantian ruang               
 				$this->data_individu[$i][$krom][3] = mt_rand(0, ($RowsDospeng1 - 1));
 
-				$this->data_individu[$i][$krom][4] = mt_rand(0, ($RowsDospeng1 - 1));
+				$this->data_individu[$i][$krom][4] = mt_rand(0, ($RowsDospeng2 - 1));
 			}
 
 			$fitness[$i] = $this->CekFitness($i);

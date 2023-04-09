@@ -43,21 +43,21 @@
               <div class="row col-sm-12 pt-2">
                 <label class="col-sm-4">Crossover</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" name="crossover" value="<?php echo isset($crossover) ? $crossover : '0.70'; ?>">
+                  <input type="text" class="form-control" name="crossover" value="<?php echo isset($crossover) ? $crossover : '0.7'; ?>">
                 </div>
               </div>
 
               <div class="row col-sm-12 pt-2">
                 <label class="col-sm-4">Mutasi</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" name="mutasi" value="<?php echo isset($mutasi) ? $mutasi : '0.40'; ?>">
+                  <input type="text" class="form-control" name="mutasi" value="<?php echo isset($mutasi) ? $mutasi : '0.3'; ?>">
                 </div>
               </div>
 
               <div class="row col-sm-12 pt-2">
                 <label class="col-sm-4">Jumlah Generasi</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" name="jumlah_generasi" value="<?php echo isset($jumlah_generasi) ? $jumlah_generasi : '1000'; ?>">
+                  <input type="text" class="form-control" name="jumlah_generasi" value="<?php echo isset($jumlah_generasi) ? $jumlah_generasi : '100'; ?>">
                 </div>
               </div>
 
@@ -77,7 +77,7 @@
 
             <!- Button Buat Jadwal -->
               <div class="col-sm-4 pt-4">
-                <button class="btn btn-success mb-3" type="submit"><i class="fas fa-sync-alt"></i> Buat Jadwal</a>
+                <button class="btn btn-success mb-3" type="submit"><i class="fas fa-sync-alt"></i> Buat Jadwal</button>
               </div>
             </div>
           </form>
@@ -108,10 +108,10 @@
                   while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
                     if ($result->rowCount() == 1) {
                       $kode_jadwal = $r['kode_jadwal_sp'];
-                      $waktu = "SP" . date('Ydm');
+                      $waktu = "SP" . date('dmY');
                       $kode_jadwal_new = $waktu;
                     } else {
-                      $kode_jadwal_new = "SP" . date('Ydm');
+                      $kode_jadwal_new = "SP" . date('dmY');
                     }
                   }
 
@@ -199,10 +199,31 @@
                   <th>Jam</th>
                   <th>Hari</th>
                   <th>Tanggal</th>
+                  <th>Link Zoom</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
+                <!-- Fungsi Untuk Mengubah Nama Bulan Menjadi Bahasa Indonesia -->
+                <?php function tanggal_indo($tanggal)
+                {
+                  $bulan = array(
+                    1 =>   'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                  );
+                  $split = explode('-', $tanggal);
+                  return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+                } ?>
                 <?php $no = 1; ?>
                 <?php foreach ($data_proposal as $dp => $data) : ?>
                   <?php if ($data_dospeng1[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
@@ -216,8 +237,9 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
+                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
                     </tr>
                   <?php } else if ($data_dosbim1[$dp]['name'] ==  $data_dospeng1[$dp]['name']) { ?>
                     <tr style="background: red; color: white;">
@@ -230,8 +252,9 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
+                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
                     </tr>
 
                   <?php } else if ($data_dosbim1[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
@@ -245,7 +268,8 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
                     </tr>
 
@@ -260,8 +284,9 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
+                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
                     </tr>
 
                   <?php } else if ($data_dosbim2[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
@@ -275,8 +300,9 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
+                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
                     </tr>
                   <?php } else { ?>
                     <tr>
@@ -289,8 +315,9 @@
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
                       <td><?= $data_jam[$dp]['range_jam']; ?></td>
                       <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
+                      <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
+                      <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
+                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
                     </tr>
                   <?php } ?>
 
@@ -309,7 +336,7 @@
 
     <!-- Modal Fitur -->
 
-    <!-- Modal Edit Data Dosen -->
+    <!-- Modal Edit Data Jadwal -->
     <?php foreach ($data_jadwal as $dj => $data) : ?>
       <div class="modal fade" id="editJadwalModal<?= $data['kode_sp']; ?>" tabindex="-1" aria-labelledby="editJadwalModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -362,7 +389,11 @@
                   </div>
                   <div class="mb-3">
                     <label for="">Tanggal</label><br>
-                    <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= $data['tanggal']; ?>">
+                    <input min="<?= date('Y-m-d'); ?>" type="date" class="form-control" name="tanggal" value="<?= $data['tanggal']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="">Link Zoom</label><br>
+                    <input type="text" class="form-control" name="link" id="link" value="<?= $data['link']; ?>">
                   </div>
                 </div>
               </div>

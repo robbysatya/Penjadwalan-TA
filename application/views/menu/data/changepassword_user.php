@@ -4,10 +4,9 @@
       <!-- Page Heading -->
       <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-      <div class="card shadow mb-4">
+      <div class="card mb-4">
         <div class="card-header py-3">
-          <a href="<?= base_url('menu/data_user/edit/' . $user_recent['id']); ?>"><i
-              class="fas fa-fw fa-arrow-left"></i>
+          <a href="<?= base_url('menu/data_user/edit/' . $user_recent['id']); ?>"><i class="fas fa-fw fa-arrow-left"></i>
             Kembali</a>
         </div>
         <div class="card-body">
@@ -15,8 +14,7 @@
             <div class="modal-body">
               <?= $this->session->flashdata('message'); ?>
               <form action="<?= base_url('menu/data_user/changepasswordUser/' . $user_recent['id']); ?>" method="POST">
-                <input type="text" class="form-control" id="id" name="id" placeholder="ID"
-                  value="<?= $user_recent['id']; ?>" hidden>
+                <input type="text" class="form-control" id="id" name="id" placeholder="ID" value="<?= $user_recent['id']; ?>" hidden>
                 <div class="form-group">
                   <label for="new_password1">New Password</label>
                   <input type="password" class="form-control" id="new_password1" name="new_password1">

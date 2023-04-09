@@ -23,17 +23,29 @@ class Jadwal_Proposal extends CI_Controller
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
     $data['data_proposal'] = $this->jadwal_model->getNamaMahasiswa_sp();
+    $data['data_jadwal'] = $this->jadwal_model->getDataJadwalProposal();
     $data['data_dosbim1'] = $this->jadwal_model->getDosBim_1_proposal();
     $data['data_dosbim2'] = $this->jadwal_model->getDosBim_2_proposal();
     $data['data_dospeng1'] = $this->jadwal_model->getNamaDospeng1_sp();
     $data['data_dospeng2'] = $this->jadwal_model->getNamaDospeng2_sp();
     $data['data_hari'] = $this->jadwal_model->getNamaHari_sp();
     $data['data_jam'] = $this->jadwal_model->getNamaJam_sp();
+    $data['data_link'] = $this->jadwal_model->getLink_proposal();
 
     $this->load->view('templates/header', $data);
     $this->load->view('templates/sidebar', $data);
     $this->load->view('templates/topbar', $data);
     $this->load->view('menu/jadwal/jadwal_sempro', $data);
     $this->load->view('templates/footer');
+  }
+
+  public function edit()
+  {
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+    $this->jadwal_model->edit_jadwalfix_sempro();
+
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Jadwal Berhasil Diubah!</div>');
+    redirect('jadwal/jadwal_proposal');
   }
 }

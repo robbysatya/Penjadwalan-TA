@@ -79,7 +79,7 @@ class Auth extends CI_Controller
 
 			$this->_sendEmail($token, 'verify');
 
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Congratulation! your account has been created. Please check email to activate your account!</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat! anda telah berhasil telah membuat akun. Silahkan cek email anda untuk mengaktifkan akun!</div>');
 			redirect('auth');
 		}
 	}
@@ -139,21 +139,21 @@ class Auth extends CI_Controller
 					$this->db->update('user');
 
 					$this->db->delete('user_token', ['email' => $email]);
-					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $email . ' has been activated. Please login.</div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $email . ' telah diaktifkan. Silahkan masuk.</div>');
 					redirect('auth');
 				} else {
 					$this->db->delete('user', ['email' => $email]);
 					$this->db->delete('user_token', ['email' => $email]);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Account activation failed! Token expired!</div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun gagal diaktifkan! Token kadaluarsa!</div>');
 					redirect('auth');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Account activation failed! Wrong token!</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun gagal diaktifkan! Token salah!</div>');
 				redirect('auth');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Account activation failed!</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun gagal diaktifkan!</div>');
 			redirect('auth');
 		}
 	}
@@ -163,7 +163,7 @@ class Auth extends CI_Controller
 		$this->session->unset_userdata('email');
 		$this->session->unset_userdata('role id');
 
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logged out!</div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda telah keluar!</div>');
 		redirect('auth');
 	}
 
@@ -176,7 +176,7 @@ class Auth extends CI_Controller
 	public function forgotpassword()
 	{
 
-		$data['title'] = 'Forgot Password';
+		$data['title'] = 'Lupa Password';
 		$this->load->view('templates/auth_header', $data);
 		$this->load->view('auth/forgotpassword');
 		$this->load->view('templates/auth_footer');
