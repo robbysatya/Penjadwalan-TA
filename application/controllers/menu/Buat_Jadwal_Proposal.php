@@ -293,13 +293,11 @@ class Buat_Jadwal_Proposal extends CI_Controller
 			$dospeng_a = intval($this->data_individu[$indv][$i][3]);
 			$dosbim_a = $RowsDosbim1[$i];
 
-
 			for ($j = 0; $j < $RowsProposal; $j++) {
 				$hari_b = intval($this->data_individu[$indv][$j][1]);
 				$jam_b = intval($this->data_individu[$indv][$j][2]);
 				$dospeng_b = intval($this->data_individu[$indv][$j][4]);
 				$dosbim_b = $RowsDosbim2[$j];
-
 				if ($i == $j) {
 					continue;
 				}
@@ -346,7 +344,7 @@ class Buat_Jadwal_Proposal extends CI_Controller
 			}
 			// end loop k
 		}
-		$fitness = floatval(1 / (1 * $penalty + 1));
+		$fitness = floatval(1 / (1 + $penalty));
 		return $fitness;
 	}
 

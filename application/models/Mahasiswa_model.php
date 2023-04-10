@@ -123,7 +123,7 @@ class Mahasiswa_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tb_proposal');
-		$this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id', 'left');
+		$this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id');
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -171,12 +171,11 @@ class Mahasiswa_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getDospeng_2_sidang()
-	{
-		$this->db->select('*');
-		$this->db->from('tb_sidang');
-		$this->db->join('tb_dosen', 'tb_sidang.dospeng_2 = tb_dosen.id', 'left');
-		$query = $this->db->get();
+	// public function getKategori_Sidang($sidang)
+	// {
+	// 	$this->db->select('*');
+	// 	$this->db->from('tb_sidang');
+	// 	$query = $this->db->get('tb_sidang', $sidang);
 
 		return $query->result_array();
 	}
