@@ -38,8 +38,8 @@ class Dosen_model extends CI_Model
   public function getJamDosen()
   {
     $this->db->select('*');
-    $this->db->from('tb_jam');
-    $this->db->join('tb_jadwal_dosen', 'tb_jadwal_dosen.jam = tb_jam.kode_jam');
+    $this->db->from('tb_jam_sempro');
+    $this->db->join('tb_jadwal_dosen', 'tb_jadwal_dosen.jam = tb_jam_sempro.kode_jam');
     $query = $this->db->get();
 
     return $query->result_array();
@@ -82,7 +82,7 @@ class Dosen_model extends CI_Model
       'name' => $this->input->post('name'),
       'email' => $this->input->post('email'),
       'keahlian_id' => $this->input->post('keahlian_id'),
-      'kuota_uji' => $this->input->post('kuota')
+      // 'kuota_uji' => $this->input->post('kuota')
     ];
     return $this->db->insert('tb_dosen', $post);
   }

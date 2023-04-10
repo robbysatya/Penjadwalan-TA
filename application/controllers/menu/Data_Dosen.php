@@ -44,12 +44,12 @@ class Data_Dosen extends CI_Controller
     $data['data_keahlian'] = $this->db->get('tb_keahlian')->result_array();
 
     if ($validation->run() == false) {
-      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Validation Failed!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Validasi Gagal!</div>');
       redirect('menu/data_dosen');
     } else {
       $this->dosen_model->save();
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Dosen Saved!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Dosen Berhasil Disimpan!</div>');
       redirect('menu/data_dosen');
     }
   }
@@ -66,7 +66,7 @@ class Data_Dosen extends CI_Controller
     } else {
       $dosen->update();
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Dosen Success Updated!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Dosen Berhasil Diperbaharui!</div>');
       redirect('menu/data_dosen');
     }
   }
@@ -76,10 +76,10 @@ class Data_Dosen extends CI_Controller
     $id = $this->input->post('id');
 
     if (!isset($id)) {
-      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed Delete Data Dosen!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menghapus Data Dosen!</div>');
       redirect('menu/data_dosen');
     } elseif ($this->dosen_model->delete($id)) {
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Data Dosen Success!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menghapus Data Dosen Berhasil!</div>');
       redirect('menu/data_dosen');
     }
   }

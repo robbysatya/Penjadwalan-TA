@@ -87,7 +87,7 @@
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Simpan Jadwal Sidang</h6>
           </div>
-          <form action="<?= base_url('menu/buat_jadwal_proposal/simpan_jadwal') ?>" method="post">
+          <form action="<?= base_url('menu/buat_jadwal_sidang/simpan_jadwal') ?>" method="post">
             <div class="card-body">
               <div class="row col-sm-12 pt-2">
                 <label for="" class="col-sm-4">Kode Jadwal</label>
@@ -101,17 +101,17 @@
                   $koneksi = new PDO("mysql:host={$host};dbname={$database}", $user, $password);
                   $koneksi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                  $sql =  "SELECT max(kode_jadwal_sp) as kode_jadwal_sp FROM tb_jadwal_proposal";
+                  $sql =  "SELECT max(kode_jadwal_sa) as kode_jadwal_sa FROM tb_jadwal_sidang";
 
                   $result = $koneksi->query($sql);
 
                   while ($r = $result->fetch(PDO::FETCH_ASSOC)) {
                     if ($result->rowCount() == 1) {
-                      $kode_jadwal = $r['kode_jadwal_sp'];
-                      $waktu = "SP" . date('Ydm');
+                      $kode_jadwal = $r['kode_jadwal_sa'];
+                      $waktu = "SA" . date('dmY');
                       $kode_jadwal_new = $waktu;
                     } else {
-                      $kode_jadwal_new = "SP" . date('Ydm');
+                      $kode_jadwal_new = "SA" . date('dmY');
                     }
                   }
 
@@ -199,100 +199,48 @@
                   <th>Jam</th>
                   <th>Hari</th>
                   <th>Tanggal</th>
+                  <th>Link Zoom</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
+                <!-- Fungsi Untuk Mengubah Nama Bulan Menjadi Bahasa Indonesia -->
+                <?php function tanggal_indo($tanggal)
+                {
+                  $bulan = array(
+                    1 =>   'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                  );
+                  $split = explode('-', $tanggal);
+                  return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+                } ?>
                 <?php $no = 1; ?>
-                <?php foreach ($data_proposal as $dp => $data) : ?>
-                  <?php if ($data_dospeng1[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
-                    <tr style="background: red; color: white;">
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
-                  <?php } else if ($data_dosbim1[$dp]['name'] ==  $data_dospeng1[$dp]['name']) { ?>
-                    <tr style="background: red; color: white;">
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
+                <?php foreach ($data_sidang as $ds => $data) : ?>
 
-                  <?php } else if ($data_dosbim1[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
-                    <tr style="background: red; color: white;">
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
-
-                  <?php } else if ($data_dosbim2[$dp]['name'] ==  $data_dospeng1[$dp]['name']) { ?>
-                    <tr style="background: red; color: white;">
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
-
-                  <?php } else if ($data_dosbim2[$dp]['name'] ==  $data_dospeng2[$dp]['name']) { ?>
-                    <tr style="background: red; color: white;">
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
-                  <?php } else { ?>
-                    <tr>
-                      <td scope="row"><?= $no; ?></td>
-                      <!-- <td><?= $data['name']; ?></td> -->
-                      <td><?= $data['judul']; ?></td>
-                      <td><?= $data_dosbim1[$dp]['name']; ?></td>
-                      <td><?= $data_dosbim2[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng1[$dp]['name']; ?></td>
-                      <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
-                      <td><?= $data_jadwal[$dp]['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
-                    </tr>
-                  <?php } ?>
+                  <tr>
+                    <td scope="row"><?= $no; ?></td>
+                    <!-- <td><?= $data['name']; ?></td> -->
+                    <td><?= $data['judul']; ?></td>
+                    <td><?= $data_dosbim1[$ds]['name']; ?></td>
+                    <td><?= $data_dosbim2[$ds]['name']; ?></td>
+                    <td><?= $data_dospeng1[$ds]['name']; ?></td>
+                    <td><?= $data_dospeng2[$ds]['name']; ?></td>
+                    <td><?= $data_jam[$ds]['range_jam']; ?></td>
+                    <td><?= $data_hari[$ds]['nama_hari']; ?></td>
+                    <td><?= tanggal_indo($data_jadwal[$ds]['tanggal']); ?></td>
+                    <td><a href="<?= $data_jadwal[$ds]['link']; ?>" target="_blank"><?= $data_jadwal[$ds]['link']; ?></a></td>
+                    <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sa']; ?>">Edit</a></td>
+                  </tr>
 
                   <?php $no++; ?>
                 <?php endforeach; ?>
@@ -309,9 +257,9 @@
 
     <!-- Modal Fitur -->
 
-    <!-- Modal Edit Data Dosen -->
+    <!-- Modal Edit Data Jadwal -->
     <?php foreach ($data_jadwal as $dj => $data) : ?>
-      <div class="modal fade" id="editJadwalModal<?= $data['kode_sp']; ?>" tabindex="-1" aria-labelledby="editJadwalModalLabel" aria-hidden="true">
+      <div class="modal fade" id="editJadwalModal<?= $data['kode_sa']; ?>" tabindex="-1" aria-labelledby="editJadwalModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -320,11 +268,11 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="<?= base_url('menu/Buat_Jadwal_Proposal/edit') ?>" method="post">
+            <form action="<?= base_url('menu/Buat_Jadwal_Sidang/edit') ?>" method="post">
               <div class="modal-body">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="kode_sp" name="kode_sp" required value="<?= $data['kode_sp']; ?>" hidden>
-                  <div class="mb-3">
+                  <input type="text" class="form-control" id="kode_sa" name="kode_sa" required value="<?= $data['kode_sa']; ?>" hidden>
+                  <!-- <div class="mb-3">
                     <label for="">Dosen Penguji 1</label>
                     <select class="form-control" id="dospeng_1" name="dospeng_1" placeholder="Dosen Penguji 1" required>
                       <option selected value="<?= $data['dospeng_1'] ?>"><?= $data_dospeng1[$dj]['name'] ?></option>
@@ -341,7 +289,7 @@
                         <option value="<?= $dd['id'] ?>"><?= $dd['name'] ?></option>
                       <?php endforeach; ?>
                     </select>
-                  </div>
+                  </div> -->
                   <div class="mb-3">
                     <label for="">Hari</label>
                     <select class="form-control" id="hari" name="hari" placeholder="Hari" required>
@@ -362,7 +310,11 @@
                   </div>
                   <div class="mb-3">
                     <label for="">Tanggal</label><br>
-                    <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= $data['tanggal']; ?>">
+                    <input id="dateEnd" type="date" class="form-control" name="tanggal" id="tanggal" value="<?= $data['tanggal']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="">Link Zoom</label><br>
+                    <input type="text" class="form-control" name="link" id="link" value="<?= $data['link']; ?>">
                   </div>
                 </div>
               </div>

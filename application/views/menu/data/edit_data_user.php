@@ -8,7 +8,7 @@
       <?= $this->session->flashdata('message');  ?>
 
       <!-- DataTales Example -->
-      <div class="card shadow mb-4">
+      <div class="card mb-4">
         <div class="card-header py-3">
           <a href="<?= base_url('menu/data_user') ?>"><i class="fas fa-fw fa-arrow-left"></i>
             Kembali</a>
@@ -20,32 +20,27 @@
           <form>
             <div class="modal-body">
               <div class="form-group">
-                <input type="text" class="form-control" id="id" name="id" placeholder="ID"
-                  value="<?= $user_recent['id']; ?>" hidden>
+                <input type="text" class="form-control" id="id" name="id" placeholder="ID" value="<?= $user_recent['id']; ?>" hidden>
                 <div class="mb-3">
                   <label for="">NIM</label>
-                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa"
-                    value="<?= $user_recent['nim']; ?>">
+                  <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Mahasiswa" value="<?= $user_recent['nim']; ?>">
                   <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Nama Lengkap</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa"
-                    value="<?= $user_recent['name']; ?>">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Nama Mahasiswa" value="<?= $user_recent['name']; ?>">
                   <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="mb-3">
                   <label for="">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Mahasiswa"
-                    value="<?= $user_recent['email']; ?>">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Mahasiswa" value="<?= $user_recent['email']; ?>">
                   <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
 
                 <div class="mb-3">
                   <label for="">Password</label>
                   <br>
-                  <a href="<?= base_url('menu/data_user/changepassword/' . $user_recent['id']); ?>"
-                    class="btn btn-outline-danger">Change Password</a>
+                  <a href="<?= base_url('menu/data_user/changepassword/' . $user_recent['id']); ?>" class="btn btn-outline-danger">Change Password</a>
                 </div>
 
                 <div class="mb-3">
@@ -57,7 +52,7 @@
                       if ($user_recent['role_id'] == 1) : echo "Administrator";
                       elseif ($user_recent['role_id'] == 2) : echo "Mahasiswa" ?><?php endif; ?></option>
                     <?php foreach ($data_role as $dr) : ?>
-                    <option value="<?= $dr['id']; ?>"><?= $dr['role']; ?></option>
+                      <option value="<?= $dr['id']; ?>"><?= $dr['role']; ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>

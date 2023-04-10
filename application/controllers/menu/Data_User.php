@@ -76,7 +76,7 @@ class Data_User extends CI_Controller
     } else {
       $data_user->save();
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Add Account Success!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambahkan Akun!</div>');
       redirect('menu/data_user');
     }
   }
@@ -123,7 +123,7 @@ class Data_User extends CI_Controller
     } else {
       $data_user->update($id);
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Account Success!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Edit Akun Berhasil!</div>');
       redirect('menu/data_user');
     }
   }
@@ -133,17 +133,17 @@ class Data_User extends CI_Controller
     $id = $this->input->post('id');
 
     if (!isset($id)) {
-      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed Delete Account!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Menghapus Akun!</div>');
       redirect('menu/data_user');
     } elseif ($this->data_user_model->delete($id)) {
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Data Account Success!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menghapus Data Akun!</div>');
       redirect('menu/data_user');
     }
   }
 
   public function changepassword($id = null)
   {
-    $data['title'] = 'Change Password User';
+    $data['title'] = 'Ubah Password User';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['user_recent'] = $this->data_user_model->getById($id);
 
@@ -157,7 +157,7 @@ class Data_User extends CI_Controller
 
   public function changepasswordUser($id = null)
   {
-    $data['title'] = 'Change Password User';
+    $data['title'] = 'Ubah Password User';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data_user =  $this->data_user_model;
 
@@ -175,7 +175,7 @@ class Data_User extends CI_Controller
     } else {
       $data_user->changepasswordUser($id);
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password changed!</div>');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password berhasil diubah!</div>');
       redirect('menu/data_user/edit/' . $id);
     }
   }
