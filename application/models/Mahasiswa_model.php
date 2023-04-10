@@ -123,7 +123,7 @@ class Mahasiswa_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tb_proposal');
-		$this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id');
+		$this->db->join('tb_dosen', 'tb_proposal.dosbim_1 = tb_dosen.id', 'left');
 		$query = $this->db->get();
 
 		return $query->result_array();
