@@ -50,7 +50,7 @@
               <div class="row col-sm-12 pt-2">
                 <label class="col-sm-4">Mutasi</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" name="mutasi" value="<?php echo isset($mutasi) ? $mutasi : '0.3'; ?>">
+                  <input type="text" class="form-control" name="mutasi" value="<?php echo isset($mutasi) ? $mutasi : '0.4'; ?>">
                 </div>
               </div>
 
@@ -235,8 +235,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
@@ -250,8 +252,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
@@ -266,8 +270,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</a></td>
@@ -282,8 +288,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
@@ -298,8 +306,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
@@ -313,8 +323,10 @@
                       <td><?= $data_dosbim2[$dp]['name']; ?></td>
                       <td><?= $data_dospeng1[$dp]['name']; ?></td>
                       <td><?= $data_dospeng2[$dp]['name']; ?></td>
-                      <td><?= $data_jam[$dp]['range_jam']; ?></td>
-                      <td><?= $data_hari[$dp]['nama_hari']; ?></td>
+                      <td><?= $data_waktu[$dp]['jam']; ?></td>
+                      <td><?= $data_waktu[$dp]['hari']; ?></td>
+                      <!-- <td><?= $data_jam[$dp]['range_jam']; ?></td>
+                      <td><?= $data_hari[$dp]['nama_hari']; ?></td> -->
                       <td><?= tanggal_indo($data_jadwal[$dp]['tanggal']); ?></td>
                       <td><a href="<?= $data_jadwal[$dp]['link']; ?>" target="_blank"><?= $data_jadwal[$dp]['link']; ?></a></td>
                       <td><button type="button" class="btn btn-primary input-block-level" data-toggle="modal" data-target="#editJadwalModal<?= $data['kode_sp']; ?>">Edit</button></td>
@@ -371,6 +383,15 @@
                   </div>
                   <div class="mb-3">
                     <label for="">Hari</label>
+                    <select class="form-control" id="waktu" name="waktu" placeholder="Waktu" required>
+                      <option selected value="<?= $data['kode_waktu'] ?>"><?= $data_waktu[$dj]['hari'] ?> : <?= $data_waktu[$dj]['jam'] ?></option>
+                      <?php foreach ($data_waktu as $dw) : ?>
+                        <option value="<?= $dw['kode_waktu'] ?>"><?= $dw['hari'] ?> : <?= $dw['jam'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <!-- <div class="mb-3">
+                    <label for="">Hari</label>
                     <select class="form-control" id="hari" name="hari" placeholder="Hari" required>
                       <option selected value="<?= $data['hari'] ?>"><?= $data_hari[$dj]['nama_hari'] ?></option>
                       <?php foreach ($data_hari as $dh) : ?>
@@ -386,7 +407,7 @@
                         <option id="jam" name="jam" value="<?= $dj['kode_jam'] ?>"> <?= $dj['range_jam'] ?><br>
                         <?php endforeach; ?>
                         <select>
-                  </div>
+                  </div> -->
                   <div class="mb-3">
                     <label for="">Tanggal</label><br>
                     <input min="<?= date('Y-m-d'); ?>" type="date" class="form-control" name="tanggal" value="<?= $data['tanggal']; ?>">

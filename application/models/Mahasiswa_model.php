@@ -171,15 +171,6 @@ class Mahasiswa_model extends CI_Model
 		return $query->result_array();
 	}
 
-	// public function getKategori_Sidang($sidang)
-	// {
-	// 	$this->db->select('*');
-	// 	$this->db->from('tb_sidang');
-	// 	$query = $this->db->get('tb_sidang', $sidang);
-
-		return $query->result_array();
-	}
-
 	function get_otomatis($nim)
 	{
 		$this->db->like('nim', $nim, 'BOTH');
@@ -187,46 +178,6 @@ class Mahasiswa_model extends CI_Model
 		$this->db->limit(10);
 		return $this->db->get('user')->result_array();
 	}
-
-	// FUNGSI MODEL EDIT/UPDATE
-	// public function update($id = null)
-	// {
-
-	// 	$data['user'] = $this->db->get_where('user', ['id' => $id]);
-
-	// 	$post = $this->input->post();
-	// 	$this->id = $post['id'];
-	// 	$this->nim = $post['nim'];
-	// 	$this->name = $post['name'];
-	// 	$this->judul = $post['judul'];
-	// 	$this->topik = $post['topik'];
-	// 	$this->keahlian_id = $post['keahlian_id'];
-	// 	$this->id_jenis_ujian = $post['id_jenis_ujian'];
-	// 	$this->dosbim_1 = $post['dosbim_1'];
-	// 	$this->dosbim_2 = $post['dosbim_2'];
-	// 	$this->file_draft = $_FILES['file_draft'];
-	// 	$this->file_ppt = $_FILES['file_ppt'];
-	// 	$this->file_persetujuan = $_FILES['file_persetujuan'];
-
-	// 	$config['upload_path'] = './assets/files/';
-	// 	$config['allowed_types'] = 'pdf';
-	// 	$config['max_size']     = '5120';
-
-	// 	$this->load->library('upload', $config);
-
-	// 	$this->upload->do_upload('file_draft');
-	// 	$this->upload->do_upload('file_ppt');
-	// 	$this->upload->do_upload('file_persetujuan');
-	// 	$old_file = $this->db->query("SELECT file_draft, file_ppt, file_persetujuan FROM user WHERE id='$id'")->row();
-	// 	unlink(FCPATH . 'assets/files/' . $old_file);
-
-	// 	$new_file = $this->upload->data('file_name');
-	// 	$this->db->set('file_draft', $new_file);
-	// 	$this->db->set('file_ppt', $new_file);
-	// 	$this->db->set('file_persetujuan', $new_file);
-
-	// 	return $this->db->update('user', $this, array('id' => $post['id']));
-	// }
 
 	// FUNGSI TOLAK DAFTAR SEMPRO
 	public function tolak_sempro($nim = null)
@@ -318,4 +269,46 @@ class Mahasiswa_model extends CI_Model
 
 		return $this->db->insert('tb_sidang', $post);
 	}
+
+
+	// FUNGSI MODEL EDIT/UPDATE
+	// public function update($id = null)
+	// {
+
+	// 	$data['user'] = $this->db->get_where('user', ['id' => $id]);
+
+	// 	$post = $this->input->post();
+	// 	$this->id = $post['id'];
+	// 	$this->nim = $post['nim'];
+	// 	$this->name = $post['name'];
+	// 	$this->judul = $post['judul'];
+	// 	$this->topik = $post['topik'];
+	// 	$this->keahlian_id = $post['keahlian_id'];
+	// 	$this->id_jenis_ujian = $post['id_jenis_ujian'];
+	// 	$this->dosbim_1 = $post['dosbim_1'];
+	// 	$this->dosbim_2 = $post['dosbim_2'];
+	// 	$this->file_draft = $_FILES['file_draft'];
+	// 	$this->file_ppt = $_FILES['file_ppt'];
+	// 	$this->file_persetujuan = $_FILES['file_persetujuan'];
+
+	// 	$config['upload_path'] = './assets/files/';
+	// 	$config['allowed_types'] = 'pdf';
+	// 	$config['max_size']     = '5120';
+
+	// 	$this->load->library('upload', $config);
+
+	// 	$this->upload->do_upload('file_draft');
+	// 	$this->upload->do_upload('file_ppt');
+	// 	$this->upload->do_upload('file_persetujuan');
+	// 	$old_file = $this->db->query("SELECT file_draft, file_ppt, file_persetujuan FROM user WHERE id='$id'")->row();
+	// 	unlink(FCPATH . 'assets/files/' . $old_file);
+
+	// 	$new_file = $this->upload->data('file_name');
+	// 	$this->db->set('file_draft', $new_file);
+	// 	$this->db->set('file_ppt', $new_file);
+	// 	$this->db->set('file_persetujuan', $new_file);
+
+	// 	return $this->db->update('user', $this, array('id' => $post['id']));
+	// }
+
 }

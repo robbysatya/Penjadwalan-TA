@@ -161,6 +161,16 @@ class Jadwal_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+	public function getNamaWaktu_acak_sempro()
+	{
+		$this->db->select('*');
+		$this->db->from('data_acak_sp');
+		$this->db->join('tb_waktu_sempro', 'data_acak_sp.kode_waktu = tb_waktu_sempro.kode_waktu', 'left');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function getNamaHari_acak()
 	{
 		$this->db->select('*');
@@ -444,15 +454,22 @@ class Jadwal_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getJadwalHariSempro()
+	public function getWaktuSempro()
 	{
 		// Data Hari Dosen
+		return $this->db->query("SELECT kode_waktu FROM tb_waktu_sempro");
+	}
+
+	// GET DATA HARI
+	public function getJadwalHariSempro()
+	{
+		// Data Hari 
 		return $this->db->query("SELECT kode_hari FROM tb_hari");
 	}
 
 	public function getJadwalHariSidang()
 	{
-		// Data Hari Dosen
+		// Data Hari
 		return $this->db->query("SELECT kode_hari FROM tb_hari");
 	}
 
